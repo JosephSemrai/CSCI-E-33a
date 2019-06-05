@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+        <title>{% block title %}{% endblock %} | Book App</title>
+        {% endblock %}
+    </head>
+        
+    <body>
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            <div id="footer">
+                <footer class = "text-center py-3">
+                    Joseph Semrai // 2019
+                    {% block footer %}
+                    {% endblock %}
+                </footer>
+                
+            </div>
+    </body>
+</html>

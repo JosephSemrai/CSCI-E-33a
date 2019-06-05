@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+<h1>Begin your search, {{username}}!</h1>
+
+<a href = "{{ url_for('search') }}"><button>Search</button></a>
+
+<a href = "{{ url_for('signout') }}"><button>Sign Out</button></a>
+
+{% endblock %}
