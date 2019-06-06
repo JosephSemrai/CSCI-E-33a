@@ -3,7 +3,19 @@
 {% block content %}
 <h1>Begin your search, {{username}}!</h1>
 
-<a href = "{{ url_for('search') }}"><button>Search</button></a>
+<div id="registration">
+    <div id="signup">
+            <h2>Search our database of over 5,000 items!</h2>
+            <form action="{{ url_for('login') }}" method="post">
+                {{error}}
+                <div class="form-group">
+                    <input class="form-control" name="searchquery" placeholder="Search via title, isbn, author, or year">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </form>
+    </div>
 
 <a href = "{{ url_for('signout') }}"><button>Sign Out</button></a>
 

@@ -2,46 +2,42 @@
 {% block title %}Home Page{% endblock %}
 {% block head %}
 {{ super() }}
-<style>
-body {
-    color: white;
-    background-image: url({{ url_for('static', filename='images/bookstack.jpg') }});
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-}
-#registration {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-#signup {
-    background-color: rgba(22, 160, 133,.7);
-    background-image: url({{ url_for('static', filename='images/black-paper.png')}});
-    border-radius: 30px;
-    padding: 4vmax;
-    margin: 2vmax;
-    text-align: center;
-}
-
-#signin {
-    background-color: rgba(39, 174, 96,.7);
-    background-image: url({{ url_for('static', filename='images/black-paper.png')}});
-    border-radius: 30px;
-    padding: 4vmax;
-    margin: 2vmax;
-    text-align: center;
-}
-
-
-</style>
 {% endblock %}
 {% block content %}
 <h1>Welcome!</h1>
 
-<div id="registration">
-        <div id="signup">
+<div class="row">
+        <div class="col-md-8" id="signup">
+            <!-- Card -->
+<div class="card card-cascade narrower">
+
+        <!-- Card image -->
+        <div class="view view-cascade gradient-card-header purple-gradient">
+      
+          <!-- Title -->
+          <h2 class="card-header-title">Ally Cook</h2>
+          <!-- Subtitle -->
+          <h5 class="mb-0 pb-3 pt-2">Follow me</h5>
+      
+          <!-- Facebook -->
+          <a type="button" class="btn-floating"><i class="fab fa-facebook-f"></i></a>
+          <!-- Twitter -->
+          <a type="button" class="btn-floating"><i class="fab fa-twitter"></i></a>
+          <!-- Google + -->
+          <a type="button" class="btn-floating"><i class="fab fa-google-plus-g"></i></a>
+      
+        </div>
+      
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+      
+          <!-- Text -->
+          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, ex, recusandae. Facere modi sunt, quod quibusdam dignissimos neque rem nihil ratione est placeat vel, natus non quos laudantium veritatis sequi.Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
+      
+        </div>
+      
+      </div>
+      <!-- Card -->
                 <h2>Please Register</h2>
                 <form action="{{ url_for('login') }}" method="post">
                     {{error}}
@@ -59,7 +55,7 @@ body {
         </div>
         
         
-        <div id="signin">
+        <div class="col-md-4" id="signin">
                 <h2>Please Sign In</h2>
                 <form action="{{ url_for('home') }}" method="post">
                     {{error}}

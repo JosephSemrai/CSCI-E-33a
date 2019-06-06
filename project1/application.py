@@ -43,8 +43,12 @@ def login():
             return render_template("login.html")
         return render_template("login.html", error=request.args.get('error'))
 
-@app.route("/home", methods=["POST"])
+@app.route("/home", methods=["GET","POST"])
 def home():
+    if request.method == "GET":
+        if session.get("user_id") is None:
+            return redirect(url_for('login', error="Redirect, you are not signed in!"))
+        return render_template("home.html", username=session["user_name"])
     username = request.form.get("name")
     password = request.form.get("password")
     databaseUser = db.execute("SELECT * FROM users WHERE username=:username", {"username": username}).fetchone()
