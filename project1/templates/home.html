@@ -1,10 +1,35 @@
 {% extends "loggedinlayout.html" %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
-<h1>Welcome {{username}}!</h1>
 
-<a href = "{{ url_for('search') }}"><button>Start Searching!</button></a>
+<div class="row py-5" style="width:100%">
+    
+        <!-- Card -->
+        <div class="card mx-auto text-center" style="width: 50vw; height:75vh;">
 
-<a href = "{{ url_for('signout') }}"><button>Sign Out</button></a>
+            <!-- Card image -->
+            <div class="view overlay h-50">
+            <img class="card-img-top" src="{{ url_for('static', filename="images/bookstack.jpg") }}" alt="Card image cap">
+                <div class="mask rgba-white-slight"></div>
+            </div>
+        
+            <!-- Card content -->
+            <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">Welcome {{username}}!</h4>
+            <!-- Text -->
+            <p class="card-text">"Books are like books, but slightly more like a novel which is a type of book."</p>
+            <!-- Button -->
+            <a href="{{ url_for('search') }}" class="btn btn-primary">Start Searching</a>
+            <a href="{{ url_for('signout') }}" class="btn btn-primary">Sign Out</a>
+        
+            </div>
+    
+        <!-- Card -->
+
+    </div>
+
+</div>
 
 {% endblock %}

@@ -1,9 +1,47 @@
 {% extends "layout.html" %}
 {% block title %}Home Page{% endblock %}
-{% block content %}
-<h1>Welcome!</h1>
-<h2>Please register</h2>
+{% block head %}
+{{ super() }}
+<style>
+</style>
+{% endblock %}
 
-<a href = "{{ url_for('login') }}"><button>Sign Up / Login</button></a>
+
+{% block content %}
+<div class="row py-5" style="width:100%">
+    
+        <!-- Card -->
+        <div class="card mx-auto text-center" style="width: 50vw; height:75vh;">
+
+            <!-- Card image -->
+            <div class="view overlay">
+            <img class="card-img-top" src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg" alt="Card image cap">
+                <div class="mask rgba-white-slight"></div>
+            </div>
+        
+            <!-- Card content -->
+            <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">Welcome to Rate Your Book!</h4>
+            <!-- Text -->
+            <p class="card-text">Join the world's smallest community of book lovers, find new interests, and explore the dwindling art of reading books.</p>
+            <!-- Button -->
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Begin Your Journey</a>
+        
+            </div>
+    
+        <!-- Card -->
+
+    </div>
+
+</div>
+    
+
+    
+
+
+
+
 
 {% endblock %}

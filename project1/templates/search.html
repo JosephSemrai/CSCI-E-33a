@@ -2,115 +2,120 @@
 {% block title %}Home Page{% endblock %}
 {% block content %}
 
-<div class="row">
-    <div class="col-md-3 mt-4">
-            
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Top Books</h5>
-                <p class="card-text">
+<div class="row ml-4 mr-4">
+  <div class="col-md-3 mt-4">
 
-                    <ol style="overflow:hidden; overflow-y:scroll; min-height: 50vh; max-height:50vh">
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
-                        <li>Bruh</li>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Top Books</h5>
+        <p class="card-text">
 
-                    </ol>
-                </p>
-                <a href="#" class="btn btn-primary">See More</a>
-            </div>
-        </div>
+          <ol style="overflow:hidden; overflow-y:scroll; min-height: 50vh; max-height:50vh">
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
+            <li>Bruh</li>
 
-
-    </div>
-    <div class="col-md-6 mt-4">
-            <div class="alert alert-danger" role="alert">
-                    {{resultError}}
-            </div>
-            <h1>Begin your search, {{username}}! <h2>Search our database of over 5,000 items!</h2>
-            </h1>
-        <!-- Material auto-sizing form -->
-<form action="{{ url_for('results') }}" method="post">
-        <!-- Grid row -->
-        <div class="form-row align-items-center">
-          <!-- Grid column -->
-          <div class="col-auto">
-            <!-- Material input -->
-            <div class="md-form">
-              <input type="text" class="form-control mb-2 mr-5 pr-3" id="inlineFormInputMD" name="searchquery" placeholder="Search via title, isbn, author, or year">
-              <label class="sr-only" for="inlineFormInputMD">Name</label>
-            </div>
-          </div>
-          <!-- Grid column -->
-      
-          <!-- Grid column -->
-          <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-0 ml-3">Submit</button>
-          </div>
-          <!-- Grid column -->
-        </div>
-        <!-- Grid row -->
-      </form>
-      <!-- Material auto-sizing form -->
-    </div>
-    <div class="col-md-3 mt-4">
-        <div class="card text-right">
-            <div class="card-body">
-                <h5 class="card-title">Had enough?</h5>
-                <p class="card-text">We're glad you're here with us, but if you'd like to sign out, please click the button below.</p>
-                <a href="{{ url_for('signout') }}" class="btn btn-secondary">Sign Out</a>
-            </div>
-        </div>
-        <div class="card text-right mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">Concerned about privacy?</h5>
-                    <p class="card-text">Delete your account. (doesn't actually delete your account)</p>
-                    <a href="{{ url_for('signout') }}" class="btn btn-danger">Destroy Account</a>
-                </div>
-            </div>
+          </ol>
+        </p>
+        <a href="#" class="btn btn-primary">See More</a>
+      </div>
     </div>
 
 
-    {% endblock %}
+  </div>
+  <div class="col-md-6 mt-4">
+    <div class="card">
+      <div class="card-body text-center">
+    {% if resultError %}
+    <div class="alert alert-danger" role="alert">
+      {{resultError}}
+    </div>
+    {% endif %}
+    <h1 class="font-weight-bold">Begin your search, {{username}}! <h2>Search our database of over 5,000 books!</h2>
+    </h1>
+    <!-- Material auto-sizing form -->
+    <form action="{{ url_for('results') }}" method="post">
+      <!-- Grid row -->
+      <div class="d-flex flex-row align-items-center mr-2 ml-2">
+        <!-- Grid column -->
+          <div class="col-md-9 md-form">
+            <input type="text" class="form-control" id="inlineFormInputMD" name="searchquery"
+              placeholder="Search via Title, ISBN, Author, or Year">
+            <label class="sr-only" for="inlineFormInputMD">Name</label>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </form>
+    <!-- Material auto-sizing form -->
+  </div>
+  </div>
+  </div>
+  <div class="col-md-3 mt-4">
+    <div class="card text-right">
+      <div class="card-body">
+        <h5 class="card-title">Had enough?</h5>
+        <p class="card-text">We're glad you're here with us, but if you'd like to sign out, please click the button
+          below.</p>
+        <a href="{{ url_for('signout') }}" class="btn btn-secondary">Sign Out</a>
+      </div>
+    </div>
+    <div class="card text-right mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Concerned about privacy?</h5>
+        <p class="card-text">Delete your account. (doesn't actually delete your account)</p>
+        <a href="{{ url_for('signout') }}" class="btn btn-danger">Destroy Account</a>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}
