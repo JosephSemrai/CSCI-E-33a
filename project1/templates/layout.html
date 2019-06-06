@@ -5,7 +5,7 @@
     {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     
-    <title>{% block title %}{% endblock %} | Book App</title>
+    <title>{% block title %}{% endblock %} | Rate Your Book</title>
     {% endblock %}
     <!-- Fonts -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -20,41 +20,42 @@
 
 <body>
     {% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">RateMyBook</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('home')}}">Home</a></li>
-                    <li class="active"><a href="{{ url_for('search')}}">Book Search<span
-                                class="sr-only">(current)</span></a></li>
-                </ul>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Help</a></li>
-                    <li><a href="#">Sign In</a></li>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <!--Navbar -->
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark orange">
+        <a class="navbar-brand" href="{{ url_for('index')}}">Rate Your Book</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+          aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+          <ul class="navbar-nav mr-auto">
+            
+            <li {%- if request.path == "/" %} class="nav-item active" {% else %} class ="nav-item"{% endif %}>
+              <a class="nav-link" href="{{ url_for('index') }}">Info</a>
+            </li>
+            <li {%- if request.path == "/login" %} class="nav-item active" {% else %} class ="nav-item"{% endif %}>
+                <a class="nav-link" href="{{ url_for('login') }}">Sign Up
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                aria-labelledby="navbarDropdownMenuLink-333">
+                <a class="dropdown-item" href="#">Preferences (Coming Never)</a>
+                <a class="dropdown-item" href="#">Contact</a>
+                <a class="dropdown-item" href="{{ url_for('login') }}">Sign In</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!--/.Navbar -->
     {% endblock %}
     <div class="container">
         {% block content %}

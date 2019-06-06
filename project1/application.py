@@ -76,8 +76,18 @@ def search():
             return redirect(url_for('login', error="Redirect, you are not signed in!"))
     return render_template("search.html", username=session["user_name"])
 
-
 @app.route("/signout")
 def signout():
     session["user_id"] = "";
     return redirect(url_for('login', error="Signed out!"))
+
+@app.route("/results", methods=["POST"])
+def results():
+    requestInfo = request.form.get("searchquery")
+    print(f"Client requested: {requestInfo}")
+    databaseSelection = db.execute("SELECT * FROM books WHERE UPPER(title) LIKE UPPER(:title) OR UPPER(isbn) LIKE UPPER(:isbn) OR UPPER(author) LIKE UPPER(:author) OR CAST(year AS TEXT) LIKE :year", {"title":"%" + requestInfo + "%", "isbn":"%" + requestInfo + "%", "author":"%" + requestInfo + "%", "year": "%" + str(requestInfo) + "%"}).fetchall()
+    for selection in databaseSelection:
+        print(selection.author)
+    if databaseSelection is None:
+        return render_template("search.html", error = "No results or incorrect query!")
+    return render_template("results.html", databaseSelection=databaseSelection)
