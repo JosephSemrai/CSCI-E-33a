@@ -59,7 +59,7 @@
 
           </ol>
         </p>
-        <a href="#" class="btn btn-primary">See More</a>
+        <a href="#" class="btn btn-warning">See More</a>
       </div>
     </div>
 
@@ -68,36 +68,49 @@
   <div class="col-md-6 mt-4">
     <div class="card">
       <div class="card-body text-center">
-    {% if resultError %}
-    <div class="alert alert-danger" role="alert">
-      {{resultError}}
-    </div>
-    {% endif %}
-    <h1 class="font-weight-bold">Begin your search, {{username}}! <h2>Search our database of over 5,000 books!</h2>
-    </h1>
-    <!-- Material auto-sizing form -->
-    <form action="{{ url_for('results') }}" method="post">
-      <!-- Grid row -->
-      <div class="d-flex flex-row align-items-center mr-2 ml-2">
-        <!-- Grid column -->
-          <div class="col-md-9 md-form">
-            <input type="text" class="form-control" id="inlineFormInputMD" name="searchquery"
-              placeholder="Search via Title, ISBN, Author, or Year">
-            <label class="sr-only" for="inlineFormInputMD">Name</label>
+        {% if resulterror %}
+        <div class="alert alert-danger" role="alert">
+          {{resulterror}}
         </div>
-        <!-- Grid column -->
+        {% endif %}
+        <h1 class="font-weight-bold">Begin your search, {{username}}! <h2>Search our database of over 5,000 books!</h2>
+        </h1>
+        <!-- Material auto-sizing form -->
+        <form action="{{ url_for('results') }}" method="post">
+          <!-- Grid row -->
+          <div class="d-flex flex-row align-items-center mr-3 ml-2">
+            <!-- Grid column -->
+            <div class="col-md-9 md-form">
+              <input type="text" class="form-control" id="inlineFormInputMD" name="searchquery"
+                placeholder="Search via Title, ISBN, Author, or Year">
+            </div>
+            <!-- Grid column -->
 
-        <!-- Grid column -->
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <!-- Grid column -->
+            <!-- Grid column -->
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row -->
+        </form>
+        <!-- Material auto-sizing form -->
       </div>
-      <!-- Grid row -->
-    </form>
-    <!-- Material auto-sizing form -->
-  </div>
-  </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class= "card-body text-center">
+        <h3 class="font-weight-bold">Quote of the Day</h3>
+        <p class="font-italic">"Books are kinda like books, idk, they're a waste of time. You should definitely be playing Minecraft or Fortnite instead right now."</p>
+      </div>
+    </div>
+    
+    <div class="card mt-4 bg-dark text-white">
+        <div class= "card-body">
+          <h3 class="font-weight-bold text-center">Important Updates</h3>
+          <ul class="font-italic"><li>We added some new stuff</li><li>We added some new books</li><ul>
+        </div>
+      </div>
   </div>
   <div class="col-md-3 mt-4">
     <div class="card text-right">
@@ -115,6 +128,13 @@
         <a href="{{ url_for('signout') }}" class="btn btn-danger">Destroy Account</a>
       </div>
     </div>
+    <div class="card text-right mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Check out the source code on GitHub!</h5>
+          <p class="card-text">Feel free to give me stars since I'm desperate for them. (maybe not on this repo since this code is definitely not something I want people to see)</p>
+          <a href="{{ url_for('signout') }}" class="btn btn-info">Check it out</a>
+        </div>
+      </div>
   </div>
 
 

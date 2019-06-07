@@ -26,7 +26,7 @@
                         <tbody>
                             {% for book in databaseSelection %}
                             <tr>
-                                <td><u><a href="{{ url_for('books', book_id = book.id) }}">{{book.title}}</a></u></td>
+                                <a href="{{ url_for('books', book_id=book.id) }}"><td>{{book.title}}</td></a>
                                 <td>{{book.author}}</td>
                                 <td>{{book.year}}</td>
                                 <td>{{book.isbn}}</td>

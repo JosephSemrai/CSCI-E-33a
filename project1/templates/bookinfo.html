@@ -1,0 +1,160 @@
+{% extends "loggedinlayout.html" %}
+{% block title %}Book Results{% endblock %}
+{% block head %}
+{{super()}}
+<style>
+    .txt-center {
+        text-align: center;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .clear {
+        float: none;
+        clear: both;
+    }
+
+    .rating {
+        width: 100%;
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        text-align: center;
+        position: relative;
+        font-size: 2rem;
+    }
+
+    .rating>label {
+        float: right;
+        display: inline;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        width: 1.1em;
+        cursor: pointer;
+        color: #000;
+    }
+
+    .rating>label:hover,
+    .rating>label:hover~label,
+    .rating>input.radio-btn:checked~label {
+        color: transparent;
+    }
+
+    .rating>label:hover:before,
+    .rating>label:hover~label:before,
+    .rating>input.radio-btn:checked~label:before,
+    .rating>input.radio-btn:checked~label:before {
+        content: "\2605";
+        position: absolute;
+        left: 0;
+        color: #FFD700;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid w-75">
+
+    <div class="d-flex flex-wrap">
+        <div class="col-md-8">
+            <div class="card mt-4">
+                <div class="card-body p-5">
+                    <h1 class="font-weight-bold">{{book.title}}</h1>
+                    <h3 class="text-warning">{{book.author}}</h3>
+                    <h4 class="text-muted">{{book.year}}</h4>
+                    <hr>
+                    <p>Written by {{book.author}} in {{book.year}}, published by some company, and read by some person
+                    </p>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body p-5">
+                    <h1 class="font-weight-bold">Reviews</h1>
+                    <hr>
+                    
+
+                    {% if not reviews %}
+                    <h4>No reviews</h4>
+                    <h5>Be the first to add one!</h5>
+                    {% endif %}
+
+
+                    {% for review in reviews %}
+                    <div class="card mt-2">
+                        <div class="card-body p-3 pt-4 pl-5">
+                                
+                            {% if review.reviewtext %}
+                            <div class="d-flex flex-row ml-3">
+                            <h2>"{{review.reviewtext}}"</h2></div>
+                            {% endif %}
+                            <div class="d-flex flex-row mr-3">
+                                    <div class="col-md-6 float-left">
+                                            <p style="color: #FFD700; font-size: 2rem;">
+                                                {% for i in range(review.rating) %}
+                                                ★
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 float-right">
+                                            <p class="text-right font-weight-bold">Posted by: {{review.username}} - {{review.userid}}</p>
+                                        </div>
+                            </div>
+                            
+
+
+                        </div>
+                    </div>
+
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mt-4">
+                <div class="card-body p-5">
+                    {% if reviewerror %}
+                    <div class="text-right alert alert-success" role="alert">
+                            {{reviewerror}}
+                    </div>
+                    {% endif %}
+                    <h1 class="font-weight-bold text-right">Add a Review</h1>
+                    <hr>
+
+                    <form action="{{ url_for('books', book_id = book.id) }}" method="post">
+
+                        <h5 class="font-weight-bold text-right text-muted">Your Rating</h5>
+                        <div class="rating">
+                            <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
+                            <label for="star5">☆</label>
+                            <input id="star4" name="rating" type="radio" value="4" class="radio-btn hide" />
+                            <label for="star4">☆</label>
+                            <input id="star3" name="rating" type="radio" value="3" class="radio-btn hide" />
+                            <label for="star3">☆</label>
+                            <input id="star2" name="rating" type="radio" value="2" class="radio-btn hide" />
+                            <label for="star2">☆</label>
+                            <input id="star1" name="rating" type="radio" value="1" class="radio-btn hide" />
+                            <label for="star1">☆</label>
+                            <div class="clear"></div>
+                        </div>
+
+                        <h5 class="mt-3 font-weight-bold text-right text-muted">(Optional) Review</h5>
+                        <input type="text" class="form-control" name="reviewtext" placeholder="Write something">
+                        <button type="submit" class="mt-4 btn btn-primary float-right">Submit</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+{% endblock %}

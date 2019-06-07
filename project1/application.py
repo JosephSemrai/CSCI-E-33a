@@ -88,6 +88,28 @@ def results():
     databaseSelection = db.execute("SELECT * FROM books WHERE UPPER(title) LIKE UPPER(:title) OR UPPER(isbn) LIKE UPPER(:isbn) OR UPPER(author) LIKE UPPER(:author) OR CAST(year AS TEXT) LIKE :year", {"title":"%" + requestInfo + "%", "isbn":"%" + requestInfo + "%", "author":"%" + requestInfo + "%", "year": "%" + str(requestInfo) + "%"}).fetchall()
     for selection in databaseSelection:
         print(selection.author)
-    if databaseSelection is None:
-        return render_template("search.html", error = "No results or incorrect query!")
+    if not databaseSelection:
+        return render_template("search.html", resulterror = "No results or incorrect query!")
     return render_template("results.html", databaseSelection=databaseSelection)
+
+@app.route("/books/<int:book_id>", methods=["GET","POST"])
+def books(book_id):
+    alreadySubmit = False # must be assigned to not throw UnboundLocalError
+    if request.method == "POST":
+        # checks if form actually filled out the rating which is required
+        if request.form.get("rating"):
+            #Checks if user has posted before
+            testInstance = db.execute("SELECT * from reviews WHERE bookid=:bookid AND userid=:userid",{"bookid":book_id, "userid":session["user_id"]}).fetchone()
+            if testInstance is None:
+                db.execute("INSERT INTO reviews (userid, username, bookid, rating, reviewtext) VALUES (:userid, :username, :bookid, :rating, :reviewtext)", {"userid":session["user_id"], "username":session["user_name"], "bookid":book_id, "rating":request.form.get("rating"), "reviewtext":request.form.get("reviewtext")})
+                db.commit()
+            else:
+                alreadySubmit = True #does this so it can properly fetch all the reviews to hand off to the new render with the error message
+    #makes sure the book exists
+    book = db.execute("SELECT * FROM books WHERE id=:id", {"id":book_id}).fetchone()
+    if book is None:
+        return render_template("error.html", error="No book found of that ID")
+    reviews = db.execute("SELECT * FROM reviews WHERE bookid=:id", {"id":book_id}).fetchall()
+    if alreadySubmit:
+        return render_template("bookinfo.html", book=book, reviews=reviews, reviewerror="You have already submitted a review!")
+    return render_template("bookinfo.html", book=book, reviews=reviews)
