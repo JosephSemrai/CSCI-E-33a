@@ -20,9 +20,9 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-auto nav-flex-icons">
-            <form class="form-inline">
+            <form action="{{ url_for('results') }}" method="post" class="form-inline">
                     <div class="md-form my-0">
-                        <input class="form-control mr-sm-2 text-right font-italic" type="text" placeholder="Quick Search" aria-label="Search">
+                        <input name="searchquery" class="form-control mr-sm-2 text-right font-italic" type="text" placeholder="Quick Search" aria-label="Search">
                     </div>
                     </form>
             <li class="nav-item dropdown">

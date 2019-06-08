@@ -26,6 +26,7 @@
                         <tbody>
                             {% for book in databaseSelection %}
                             <tr>
+                                <td><a href = "http://openlibrary.org/isbn/{{book.isbn}}"><img class="img-thumbnail mx-auto d-block" style="max-height:8vh" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}.jpg" /></a></td> <!--Gets book cover from OpenLibrary API-->
                                 <td><u><a href="{{ url_for('books', book_id = book.id) }}">{{book.title}}</a></u></td>
                                 <td>{{book.author}}</td>
                                 <td>{{book.year}}</td>
