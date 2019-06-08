@@ -1,57 +1,7 @@
-{% extends "loggedinlayout.html" %}
-{% block title %}Search Results{% endblock %}
+{% extends "layout.html" %}
+{% block title %}Error: {{error}}{% endblock %}
 {% block content %}
-<div class="container-fluid w-75">
-        <div class="row mt-5">
-                <div class="col-sm-9">
-                    <h1 class = "font-weight-bold">Results for: {{request.form.get("searchquery")}}</h1>
-                    {% if not databaseSelection %}
-                    <h1> No results found </h1>
-                    {% endif %}
-            
-                    <!--Table-->
-                    <table id="tablePreview" class="table table-striped table-hover">
-                        <!--Table head-->
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>Year</th>
-                                <th>ISBN</th>
-                                <th>ID</th>
-                            </tr>
-                        </thead>
-                        <!--Table head-->
-                        <!--Table body-->
-                        <tbody>
-                            {% for book in databaseSelection %}
-                            <tr>
-                                <a href="{{ url_for('books', book_id=book.id) }}"><td>{{book.title}}</td></a>
-                                <td>{{book.author}}</td>
-                                <td>{{book.year}}</td>
-                                <td>{{book.isbn}}</td>
-                                <td>{{book.id}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        <!--Table body-->
-                    </table>
-                    <!--Table-->
-                </div>
-                <div class="col-sm-3 mt-5 pt-5">
-                    <div class="card text-right">
-                        <div class="card-body">
-                                <h2>Quick Actions</h2>
-                                <hr>
-                                <a href="{{ url_for('signout') }}" class="btn btn-primary">Sign Out</a>
-                        </div>
-                        
-                    </div>
 
-                </div>
-            
-            </div>
-</div>
-
+<h1>{{error}}</h1>
 
 {% endblock %}

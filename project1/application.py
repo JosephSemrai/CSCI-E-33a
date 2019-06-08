@@ -22,6 +22,9 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+# API keys
+goodreadskey = "RjXynCfMsw5WR5nJDdnUw"
+
 
 @app.route("/")
 def index():
@@ -110,10 +113,10 @@ def books(book_id):
     #makes sure the book exists
     book = db.execute("SELECT * FROM books WHERE id=:id", {"id":book_id}).fetchone()
     #gets goodreads data
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "RjXynCfMsw5WR5nJDdnUw", "isbns": book.isbn}).json()['books'][0] #turns response into json data, dict
-    # loadedres = json.loads(res)[0] #converts json string to dictionary
-    print(f"The type is: {type(res)}")
-    print(res)
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": goodreadskey, "isbns": book.isbn}).json()['books'][0] #turns response into json data, dict
+    # -----debug code------
+    # print(f"The type is: {type(res)}")
+    # print(res)
     # print(res[0]['id'])
     if book is None:
         return render_template("error.html", error="No book found of that ID")
@@ -121,3 +124,28 @@ def books(book_id):
     if alreadySubmit:
         return render_template("bookinfo.html", book=book, reviews=reviews, goodreads=res, reviewerror="You have already submitted a review!")
     return render_template("bookinfo.html", book=book, reviews=reviews, goodreads=res)
+
+# @app.route("/api/<string:isbn>")
+# def api(isbn):
+#     selection = db.execute("SELECT * FROM books WHERE isbn = :isbn",{"isbn":isbn}).fetchone()
+#     if selection is None:
+#         return render_template("error.html", error="No book found with that ISBN")
+#     return redirect(url_for('search', resulterror = "No results or incorrect query!"))
+@app.route("/api/<string:isbn>")
+def api(isbn):
+    selection=db.execute("SELECT * FROM books WHERE isbn = :isbn",{"isbn":isbn}).fetchone()
+    if selection is None:
+        return render_template("404.html", error="No book found with that ISBN")
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": goodreadskey, "isbns": isbn})
+    average = res.json()['books'][0]['average_rating']
+    amtratings = res.json()['books'][0]['work_ratings_count']
+    results = {
+    "title": selection.title,
+    "author": selection.author,
+    "year": int(selection.year),
+    "isbn": isbn,
+    "review_count": int(amtratings),
+    "average_score": float(average)
+    }
+    api=json.dumps(results)
+    return render_template("api.json",json=api)

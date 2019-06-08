@@ -13,7 +13,7 @@ reader = csv.reader(f)
 # TO CREATE USER TABLE
 db.execute("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR NOT NULL, password VARCHAR NOT NULL)")
 # TO CREATE REVIEW TABLE
-db.execute("CREATE TABLE reviews (id SERIAL PRIMARY KEY, userid INTEGER NOT NULL, bookid INTEGER NOT NULL, rating INTEGER NOT NULL, reviewtext VARCHAR)")
+db.execute("CREATE TABLE reviews (id SERIAL PRIMARY KEY, userid INTEGER NOT NULL, username VARCHAR NOT NULL, bookid INTEGER NOT NULL, rating INTEGER NOT NULL, reviewtext VARCHAR)")
 # TO CREATE BOOKS TABLE
 db.execute("CREATE TABLE books (id SERIAL PRIMARY KEY, isbn VARCHAR NOT NULL, title VARCHAR NOT NULL, author VARCHAR NOT NULL, year INTEGER NOT NULL)")
 for isbn,title,author,year in reader:

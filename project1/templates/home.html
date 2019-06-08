@@ -17,12 +17,13 @@
             <div class="card-body">
         
             <!-- Title -->
-            <h4 class="card-title">Welcome {{username}}!</h4>
+            <h1 class="card-title">Welcome {{username}}!</h1>
             <!-- Text -->
-            <p class="card-text">"Books are like books, but slightly more like a novel which is a type of book."</p>
+            <h3 class="text-muted">"Books are like books, but slightly more like a novel which is a type of book."</h3>
+            <h3 class="font-italic mb-5">- Someone, 2019</h3>
             <!-- Button -->
-            <a href="{{ url_for('search') }}" class="btn btn-primary">Start Searching</a>
-            <a href="{{ url_for('signout') }}" class="btn btn-primary">Sign Out</a>
+            <a href="{{ url_for('search') }}" class="btn btn-primary p-5 font-weight-bold" style="font-size:1.5vh">Start Searching</a>
+            <a href="{{ url_for('signout') }}" class="btn btn-primary p-5 font-weight-bold" style="font-size:1.5vh">Sign Out</a>
         
             </div>
     
