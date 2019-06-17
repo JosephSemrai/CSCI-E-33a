@@ -91,14 +91,18 @@ def results():
     requestInfo = request.form.get("searchquery")
     print(f"Client requested: {requestInfo}")
     databaseSelection = db.execute("SELECT * FROM books WHERE UPPER(title) LIKE UPPER(:title) OR UPPER(isbn) LIKE UPPER(:isbn) OR UPPER(author) LIKE UPPER(:author) OR CAST(year AS TEXT) LIKE :year", {"title":"%" + requestInfo + "%", "isbn":"%" + requestInfo + "%", "author":"%" + requestInfo + "%", "year": "%" + str(requestInfo) + "%"}).fetchall()
-    for selection in databaseSelection:
-        print(selection.author)
     if not databaseSelection:
         return redirect(url_for('search', resulterror = "No results or incorrect query!"))
     return render_template("results.html", databaseSelection=databaseSelection)
 
 @app.route("/books/<int:book_id>", methods=["GET","POST"])
 def books(book_id):
+    #makes sure the book exists
+    book = db.execute("SELECT * FROM books WHERE id=:id", {"id":book_id}).fetchone()
+    if book is None:
+        print("debug")
+        return render_template("error.html", error="No book found of that ID")
+    anyError = None
     alreadySubmit = False # must be assigned to not throw UnboundLocalError
     if request.method == "POST":
         # checks if form actually filled out the rating which is required
@@ -110,27 +114,19 @@ def books(book_id):
                 db.commit()
             else:
                 alreadySubmit = True #does this so it can properly fetch all the reviews to hand off to the new render with the error message
-    #makes sure the book exists
-    book = db.execute("SELECT * FROM books WHERE id=:id", {"id":book_id}).fetchone()
+        else:
+            anyError = "You have not entered a rating!"
     #gets goodreads data
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": goodreadskey, "isbns": book.isbn}).json()['books'][0] #turns response into json data, dict
     # -----debug code------
     # print(f"The type is: {type(res)}")
     # print(res)
     # print(res[0]['id'])
-    if book is None:
-        return render_template("error.html", error="No book found of that ID")
     reviews = db.execute("SELECT * FROM reviews WHERE bookid=:id", {"id":book_id}).fetchall()
     if alreadySubmit:
         return render_template("bookinfo.html", book=book, reviews=reviews, goodreads=res, reviewerror="You have already submitted a review!")
-    return render_template("bookinfo.html", book=book, reviews=reviews, goodreads=res)
+    return render_template("bookinfo.html", book=book, reviews=reviews, goodreads=res, reviewerror=anyError)
 
-# @app.route("/api/<string:isbn>")
-# def api(isbn):
-#     selection = db.execute("SELECT * FROM books WHERE isbn = :isbn",{"isbn":isbn}).fetchone()
-#     if selection is None:
-#         return render_template("error.html", error="No book found with that ISBN")
-#     return redirect(url_for('search', resulterror = "No results or incorrect query!"))
 @app.route("/api/<string:isbn>")
 def api(isbn):
     selection=db.execute("SELECT * FROM books WHERE isbn = :isbn",{"isbn":isbn}).fetchone()

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <title>{% block title %}{% endblock %} | Flack</title>
+    {% endblock %}
+    <!-- Fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- Bootstrap, MD CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+  <!-- Main CSS -->
+  <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet" >
+  </head>
+
+<body>
+
+    <div class="container-fluid" style="min-height:100vh; min-width:100vw">
+        <div class="row fixed-top" style="height:5vh; min-width:100vw; background-color:green"></div>
+        <div class="row fixed-bottom" style="height:95vh; min-width:100vw; flex-wrap:nowrap;">
+                <div class="col bg-primary fixed-left" style="flex: 17em 0 0;">
+                    <h1 class="text-center">Channels</h1>
+                    {% block firstcolumn %}
+                    {% endblock %}
+                </div>
+        
+                <div class="col bg-secondary">
+                    <h1 class="">Chat</h1>
+                    {% block secondcolumn %}
+                    {% endblock %}
+                </div>
+        
+                <div class="col bg-warning fixed-right" style="flex: 0 0 20em;">
+                    <h1 class="text-center">Users</h1>
+                    {% block thirdcolum %}
+                    {% endblock %}
+                </div>
+        </div>
+        
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+</body>
+
+</html>
