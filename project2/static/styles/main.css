@@ -1,0 +1,69 @@
+.channelListButton {
+    width:100%;
+    border-top: 2px black solid;
+    margin: 0px;
+}
+
+/* #leftChannelGrid {
+    display: grid;
+} */
+
+#channelIntro {
+    height:4rem;
+}
+
+#channel-list {
+    margin: 0rem;
+    margin-bottom: 5rem;
+    overflow: scroll;
+}
+
+#channelSettings {
+    position: absolute;
+    height: 5rem;
+    width: 100%;
+    margin: 0;
+    bottom: 0px;
+}
+
+#addChannel {
+    width: 100%;
+    height:100%;
+    background-color: black;
+    margin: 0px;
+    color: white;
+    border-radius:0px;
+}
+
+/* Chat area */
+.chatDiv {
+    width: 100%;
+    height:5em;
+    background:rgba(255,255,255,0.5);
+}
+
+.chatContents {
+    margin: 0;
+    padding: 0;
+}
+
+.chatUser {
+    font-weight: bold;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.chatTime {
+    display: inline;
+    margin-left: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* Overrides bootstrap */
+.bmd-form-group {
+    width:100%;
+    margin:0;
+    padding:0;
+}

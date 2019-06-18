@@ -1,1 +1,2 @@
-newChannel
+
+    updateChannels()

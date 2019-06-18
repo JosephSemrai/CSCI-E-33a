@@ -1,11 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     var username = "test";
+    // Checks if there is a previous channel in memory
+    if (localStorage.getItem('currentChannel'))
+    {
+        alert('loading previous channel: ' + localStorage.getItem('currentChannel'));
+        joinChannel(localStorage.getItem('currentChannel'));
+    }
 
     // Connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     //occurs when the create channel button is pressed to add a new channel
-    document.querySelector('#add-channel').onclick = () => {
+    document.querySelector('#addChannel').onclick = () => {
         //enables submit button only if there is text
         document.querySelector('#create-channel-name').onkeyup = () => {
             if (document.querySelector('#create-channel-name').value.length > 0)
@@ -20,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'channelname': document.querySelector('#create-channel-name').value
             });
             $('#channelModal').modal('hide');
+            joinChannel(document.querySelector('#create-channel-name').value); //attempts to join the channel that was just created
             document.querySelector('#create-channel-name').value = "";
         };
 
@@ -73,8 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('#chatArea').innerHTML = "";
                 for (var key in data["messages"])
                 {
-                    document.querySelector('#chatArea').append(data["messages"][key]["content"]);
-                    
+                    createMessage(data["messages"][key]);
                 }
             }
                 
@@ -115,8 +121,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //upon receiving a message
     socket.on('chat update', data => {
-        document.querySelector("#chatArea").append(data.content)
+        createMessage(data);
     });
+
+    function createMessage(data) {
+        let chatDiv = document.createElement('div');
+        chatDiv.className = "chatDiv";
+        let chatContents = document.createElement('p');
+        chatContents.className = "chatContents";
+        let chatUser = document.createElement('p');
+        chatUser.className = "chatUser";
+        let chatTime = document.createElement('time');
+        chatTime.className = "chatTime";
+        chatTime.dateTime = data.time;
+        let chatHeading = document.createElement('div');
+        chatHeading.className = "chatHeading";
+        
+
+        chatHeading.append(chatUser);
+        chatHeading.append(chatTime);
+
+        chatContents.innerHTML = data.content;
+        chatUser.innerHTML = data.user;
+        chatTime.innerHTML = data.time;
+        
+
+        chatDiv.append(chatHeading);
+        chatDiv.append(chatContents);
+
+        document.querySelector("#chatArea").append(chatDiv)
+    }
     
 
     
