@@ -4,49 +4,91 @@
 <head>
     {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    
+
     <title>{% block title %}{% endblock %} | Flack</title>
     {% endblock %}
     <!-- Fonts -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-  <!-- Bootstrap, MD CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-  <!-- Main CSS -->
-  <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet" >
-  </head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <!-- Bootstrap, MD CSS -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <!-- Main CSS -->
+    <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
 
 <body>
+    <!-- CHANNEL CREATION MODAL -->
+        <div class="modal fade" id="channelModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Create Channel</h5>
+                      <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Channel Name:</label>
+                          <input type="text" class="form-control" id="create-channel-name">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" id="create-channel-button">Create</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-    <div class="container-fluid" style="min-height:100vh; min-width:100vw">
+    <!-- MAIN CONTAINER -->
+    <div class="container-fluid" style="min-height:100%; min-width:100%s">
         <div class="row fixed-top" style="height:5vh; min-width:100vw; background-color:green"></div>
         <div class="row fixed-bottom" style="height:95vh; min-width:100vw; flex-wrap:nowrap;">
-                <div class="col bg-primary fixed-left" style="flex: 17em 0 0;">
-                    <h1 class="text-center">Channels</h1>
-                    {% block firstcolumn %}
-                    {% endblock %}
-                </div>
-        
-                <div class="col bg-secondary">
-                    <h1 class="">Chat</h1>
-                    {% block secondcolumn %}
-                    {% endblock %}
-                </div>
-        
-                <div class="col bg-warning fixed-right" style="flex: 0 0 20em;">
-                    <h1 class="text-center">Users</h1>
-                    {% block thirdcolum %}
-                    {% endblock %}
-                </div>
+            <div class="col fixed-left" style="flex: 17em 0 0;">
+                <h1 class="text-center">Channels</h1>
+                <button type="button" class="btn btn-primary" id="add-channel" data-toggle="modal" data-target="#channelModal">Create Modal</button>
+
+                {% block firstcolumn %}
+                {% endblock %}
+            </div>
+
+            <div class="col bg-secondary">
+                <h1 class="">Chat</h1>
+                {% block secondcolumn %}
+                {% endblock %}
+            </div>
+
+            <div class="col bg-warning fixed-right" style="flex: 0 0 20em;">
+                <h1 class="text-center">Users</h1>
+                {% block thirdcolum %}
+                {% endblock %}
+            </div>
         </div>
-        
+
     </div>
 
     <!-- SCRIPTS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('body').bootstrapMaterialDesign();
+        });
+    </script>
 </body>
 
 </html>
