@@ -51,7 +51,7 @@
     <div class="container-fluid" style="min-height:100%; min-width:100%s">
         <div class="row fixed-top" style="height:5vh; min-width:100vw; background-color:green"></div>
         <div class="row fixed-bottom" style="height:95vh; min-width:100vw; flex-wrap:nowrap;">
-            <div class="col fixed-left" style="flex: 17em 0 0;">
+            <div class="col fixed-left" style="flex: 17em 0 0;margin:0;padding:0;">
                 <h1 class="text-center">Channels</h1>
                 <button type="button" class="btn btn-primary" id="add-channel" data-toggle="modal" data-target="#channelModal">Create Modal</button>
                 <ul id="channel-list">
@@ -61,13 +61,13 @@
                 {% endblock %}
             </div>
 
-            <div class="col bg-secondary">
+            <div class="col bg-secondary" style="min-width:0px;margin:0;padding:0;">
                 <h1 class="">Chat</h1>
                 {% block secondcolumn %}
                 {% endblock %}
             </div>
 
-            <div class="col bg-warning fixed-right" style="flex: 0 0 20em;">
+            <div class="col bg-warning fixed-right" style="flex: 0 0 20em;margin:0;padding:0;">
                 <h1 class="text-center">Users</h1>
                 {% block thirdcolum %}
                 {% endblock %}
