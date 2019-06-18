@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, request, render_template, redirect, url_for
+from flask import Flask, session, request, render_template, redirect, url_for, jsonify
 from flask_socketio import SocketIO, emit
 
 class Channel:
@@ -26,6 +26,14 @@ def index():
 @socketio.on("create channel")
 def createChannel(data):
     channelName = data["channelname"]
+    newChannel = Channel(channelName)
+    channels.append(newChannel)
+    print(f"Added channel {channelName}")
+    returnChannel = []
+    for channel in channels:
+        returnChannel.append(channel.name)
+    emit("all channels", {"success": True, "channels": returnChannel}, broadcast=True)
+
 
 
 
