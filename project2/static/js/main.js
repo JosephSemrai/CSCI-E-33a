@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function joinChannelButton() {
         document.querySelectorAll('.channelListButton').forEach(button => {
             button.onclick = () => {
-                alert("Button clicked!")
                 joinChannel(button.value);
             };
         });
@@ -116,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function sendMessage(content) {
-        socket.emit('new message', {'channel': localStorage.getItem('currentChannel'), 'content': content, 'user': username});
+        socket.emit('new message', {'channel': localStorage.getItem('currentChannel'), 'content': content, 'user': username, 'time': moment().unix()});
     }
 
     //upon receiving a message
@@ -143,14 +142,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         chatContents.innerHTML = data.content;
         chatUser.innerHTML = data.user;
-        chatTime.innerHTML = data.time;
+        chatTime.innerHTML = moment.unix(data.time).calendar();
         
 
         chatDiv.append(chatHeading);
         chatDiv.append(chatContents);
 
         document.querySelector("#chatArea").append(chatDiv)
+
+        let chatArea = document.getElementById('chatArea');
+            chatArea.scrollTop = chatArea.scrollHeight;
     }
+
+    
     
 
     

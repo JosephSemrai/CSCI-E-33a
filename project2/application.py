@@ -53,7 +53,7 @@ def newMessage(data):
     messageChannel = data["channel"]
     messageContent = data["content"]
     messageUser = data["user"]
-    messageTime = int(time.time())
+    messageTime = data["time"]
     channels[messageChannel].newMessage(user=messageUser, content=messageContent, time=messageTime)
     emit("chat update", channels[messageChannel].messages[-1], broadcast=True)
 
