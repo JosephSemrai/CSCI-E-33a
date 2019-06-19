@@ -1,2 +1,1 @@
-
-    updateChannels()
+    # socketio.run(app)
