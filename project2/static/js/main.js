@@ -124,6 +124,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function createMessage(data) {
+        let chatItem = document.createElement('div');
+        chatItem.className = "chatItem";
+
+
+        let chatProfileImg = document.createElement('div');
+        chatProfileImg.className = "chatProfileImg";
         let chatDiv = document.createElement('div');
         chatDiv.className = "chatDiv";
         let chatContents = document.createElement('p');
@@ -136,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let chatHeading = document.createElement('div');
         chatHeading.className = "chatHeading";
         
-
         chatHeading.append(chatUser);
         chatHeading.append(chatTime);
 
@@ -148,7 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chatDiv.append(chatHeading);
         chatDiv.append(chatContents);
 
-        document.querySelector("#chatArea").append(chatDiv)
+        chatItem.append(chatProfileImg);
+        chatItem.append(chatDiv);
+
+        document.querySelector("#chatArea").append(chatItem)
 
         let chatArea = document.getElementById('chatArea');
             chatArea.scrollTop = chatArea.scrollHeight;

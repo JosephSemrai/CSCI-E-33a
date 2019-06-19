@@ -1,64 +1,101 @@
 .channelListButton {
-    width:100%;
+    width: 100%;
     border-top: 2px black solid;
     margin: 0px;
+    text-align: left;
 }
 
-/* #leftChannelGrid {
-    display: grid;
-} */
+.channelListButton::before {
+    content: "#";
+}
+
+#leftChannelArea {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(241, 241, 241);
+}
 
 #channelIntro {
-    height:4rem;
+    display: flex;
+    background-color: rgb(216, 216, 216);
+    z-index:9000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);
+    flex: 1 1 5%;
+    min-height: 12rem;
+    max-height: 12rem;
+}
+
+#channelIntroContent {
+    margin: 1rem;
 }
 
 #channel-list {
-    margin-bottom: 5rem;
-    overflow: scroll;
+    display: flex;
+    justify-content: center;
+    flex: 1 1 85%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    overflow: auto;
 }
 
 #channelSettings {
-    position: absolute;
-    height: 5rem;
-    width: 100%;
-    margin: 0;
-    bottom: 0px;
+    display: flex;
+    flex: 1 1 10%;
+    min-height: 5rem;
+    max-height: 5rem;
+    background: rgba(0, 0, 0, 0.014);
 }
 
 #addChannel {
     width: 100%;
-    height:100%;
+    height: 100%;
     background-color: black;
     margin: 0px;
     color: white;
-    border-radius:0px;
+    border-radius: 0px;
 }
 
 /* Chat area */
 
 #middleChatArea {
-display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  height: 100%;
-  min-width:0px;margin:0;padding:0;
-
-  border-left: 2px black solid;
-  border-right: 2px black solid;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 #titleArea {
     display: flex;
+    z-index:9000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);
     flex: 1 1 5%;
-    min-height: 3rem;
-    max-height: 3rem;
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+#chatTitle {
+    font-weight: bold;
+    font-size: 1.75rem;
+    margin: .5rem;
+    margin-left: 2rem;
+}
+
+#chatTitle::before {
+    content: "#";
 }
 
 #chatArea {
-    padding-right:2rem;
-    padding-left:2rem;
-    
     display: flex;
+    justify-content: center;
     flex: 1 1 85%;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -71,26 +108,51 @@ display: flex;
     flex: 1 1 10%;
     min-height: 5rem;
     max-height: 5rem;
-    background:rgba(0, 0, 0, 0.014);
+    background: rgba(0, 0, 0, 0.014);
 
 }
 
 #messageBox {
-    min-width:100%;
+    min-width: 100%;
 }
+
 /* Overrides bootstrap, ALSO RESPONSIBLE FOR THE ABOVE MESSAGE BOX */
-.bmd-form-group { 
-    min-width:100%;
-    padding-left: 2rem;
-    padding-right: 2rem;
+.bmd-form-group {
+    min-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 
 /* Received Chat Styles */
+.chatItem {
+    display: inline-flex;
+    width: 95%;
+    border-top: rgb(216, 216, 216) 1px solid;
+}
+
+
+.chatProfileImg {
+    margin:1rem;
+    display: inline-block;
+    vertical-align: top;
+
+    background-image: url('/static/img/profile-placeholder.png');
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+}
+
 .chatDiv {
-    width: 100%;
-    height:5em;
-    border-top: black 1px solid;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    display: inline-block;
 }
 
 .chatContents {
@@ -107,9 +169,44 @@ display: flex;
 
 .chatTime {
     display: inline;
-    margin-left: 2rem;
-    margin: 0;
+    margin-left: .5rem;
+    font-size: 80%;
     padding: 0;
+    color: rgb(122, 122, 122);
 }
 
+#rightUserArea {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(241, 241, 241);
+}
 
+#rightUserIntro {
+    display: flex;
+    background-color: rgb(216, 216, 216);
+    z-index:9000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);
+    flex: 1 1 5%;
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+#rightUserIntroContent {
+    height:100%;
+    width:100%;
+}
+
+#rightUsers {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 95%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    overflow: auto;
+}

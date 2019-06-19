@@ -59,12 +59,17 @@
 
   <!-- MAIN CONTAINER -->
   <div class="container-fluid" style="min-height:100%; min-width:100%s">
-    <div class="row fixed-top" style="height:5vh; min-width:100vw; background-color:green"></div>
+    <div class="row fixed-top" style="height:5vh; min-width:100vw; margin:0; padding:0; background-color:green">
+    <h1 style="color:red;">YOU ARE IN DEBUG MODE (Logged in as: , alias: "test")</h1>
+    </div>
     <div class="row fixed-bottom" style="height:95vh; min-width:100vw; flex-wrap:nowrap;padding:0;margin:0;">
-      <div class="col fixed-left" id="leftChannelGrid" style="flex: 17em 0 0;margin:0;padding:0;height:100%;">
+      <div class="col" id="leftChannelArea" style="flex: 17em 0 0;margin:0;padding:0;height:100%;">
 
           <div id="channelIntro">
-            <h2 class="text-center">Channels</h2>
+            <div id="channelIntroContent">
+                <p style="font-weight:bold; font-size:1.6rem;margin-bottom:0;">Welcome to Test Server!</p>
+                <p style="font-size: .8rem;">This server would be more fun with friends! Send your first invite by copying the link in your address bar.</p>
+            </div>
           </div>
           
           
@@ -86,7 +91,7 @@
       </div>
 
       <div class="col" id="middleChatArea">
-        <div id="titleArea" class="bg-warning"><h1 id="chatTitle">Chat</h1></div>
+        <div id="titleArea"><p id="chatTitle">Chat</p></div>
         <div id="chatArea"></div>
         <div id="messageArea">
                 <input type="text" class="form-control" type="text" id="messageBox" placeholder="Send a message in #ADD THIS FUNCTIONALITY LATER">
@@ -95,10 +100,19 @@
       
       </div>
 
-      <div class="col bg-warning fixed-right" style="flex: 0 0 20em;margin:0;padding:0;">
-        <h1 class="text-center">Users</h1>
-        {% block thirdcolum %}
-        {% endblock %}
+      <div class="col" id="rightUserArea" style="flex: 0 0 20em;margin:0;padding:0;">
+        <div id="rightUserIntro">
+            <p style="font-weight:bold; font-size:1.6rem;text-align:center; width:100%; margin:1rem;">ADD TOOLS HERE</p>
+
+        </div>
+
+        <div id="rightUsers">
+          <p style="text-align:center; width:100%; font-weight:bold;">Online Users</p>
+          <hr>
+          <p style="text-align:center; width:100%; font-weight:bold;">Offline Users</p>
+          <hr>
+
+        </div>
       </div>
     </div>
 
