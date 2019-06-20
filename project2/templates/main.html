@@ -2,6 +2,10 @@
 <html>
 
   <head>
+    <script>
+    localStorage.setItem('username', "{{currentuser.username}}");
+    localStorage.setItem('uuid', "{{currentuser.uuid}}");
+    </script>
     {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
@@ -60,7 +64,7 @@
   <!-- MAIN CONTAINER -->
   <div class="container-fluid" style="min-height:100%; min-width:100%s">
     <div class="row fixed-top" style="height:5vh; min-width:100vw; margin:0; padding:0; background-color:green">
-    <h1 style="color:red;">YOU ARE IN DEBUG MODE (Logged in as: , alias: "test")</h1>
+    <h1 id="debugHeading" style="font-size: 1rem;">YOU SHOULD NOT BE SEEING THIS</h1>
     </div>
     <div class="row fixed-bottom" style="height:95vh; min-width:100vw; flex-wrap:nowrap;padding:0;margin:0;">
       <div class="col" id="leftChannelArea" style="flex: 17em 0 0;margin:0;padding:0;height:100%;">

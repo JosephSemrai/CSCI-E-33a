@@ -1,9 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    var username = "test";
+
+    //DEBUG
+    debugHeading = document.querySelector("#debugHeading").innerHTML = "YOU ARE IN DEBUG MODE (" + localStorage.getItem('username') + " UUID: " + localStorage.getItem('uuid') + ")";
+
+    // Gets items from Jinja template's script which takes in the template parameters
+    var username = localStorage.getItem('username');
+    var uuid = localStorage.getItem('uuid');
+
+
+
+
     // Checks if there is a previous channel in memory
-    if (localStorage.getItem('currentChannel'))
-    {
-        alert('loading previous channel: ' + localStorage.getItem('currentChannel'));
+    if (localStorage.getItem('currentChannel')) {
         joinChannel(localStorage.getItem('currentChannel'));
     }
 
@@ -74,21 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
         request.onload = () => {
             // Extract JSON data from request
             const data = JSON.parse(request.responseText);
-            if (data["messages"])
-            {
+            if (data["messages"]) {
                 document.querySelector('#chatArea').innerHTML = "";
-                for (var key in data["messages"])
-                {
+                for (var key in data["messages"]) {
                     createMessage(data["messages"][key]);
                 }
             }
-                
+
         }
 
         const data = new FormData();
         data.append('channelName', channelName);
 
         request.send(data);
+
+        return true;
     }
 
     //if in channel, make button depressed
@@ -96,26 +104,28 @@ document.addEventListener('DOMContentLoaded', () => {
     //send message
     messageBox = document.querySelector("#messageBox");
     messageBox.addEventListener("keydown", function (e) {
-        if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
-        
-        message = messageBox.value;
+        if (e.keyCode === 13) { //checks whether the pressed key is "Enter"
+            message = messageBox.value;
 
-        if (message != "") //checks if the message is empty
-        {
-            sendMessage(messageBox.value);
-            messageBox.value = "";
-            //resets messagebox
+            if (message != "") //checks if the message is empty
+            {
+                sendMessage(message);
+                messageBox.value = "";
+                //resets messagebox
+            } else {
+                alert("Message not valid. Is it empty?");
+            }
+
         }
-        else
-        {
-            alert("Message not valid. Is it empty?");
-        }
-        
-    }
     });
 
     function sendMessage(content) {
-        socket.emit('new message', {'channel': localStorage.getItem('currentChannel'), 'content': content, 'user': username, 'time': moment().unix()});
+        socket.emit('new message', {
+            'channel': localStorage.getItem('currentChannel'),
+            'content': content,
+            'uuid': uuid,
+            'time': moment().unix()
+        });
     }
 
     //upon receiving a message
@@ -141,14 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
         chatTime.dateTime = data.time;
         let chatHeading = document.createElement('div');
         chatHeading.className = "chatHeading";
-        
+
         chatHeading.append(chatUser);
         chatHeading.append(chatTime);
 
         chatContents.innerHTML = data.content;
-        chatUser.innerHTML = data.user;
+        chatUser.innerHTML = data.username;
         chatTime.innerHTML = moment.unix(data.time).calendar();
-        
+
 
         chatDiv.append(chatHeading);
         chatDiv.append(chatContents);
@@ -159,13 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector("#chatArea").append(chatItem)
 
         let chatArea = document.getElementById('chatArea');
-            chatArea.scrollTop = chatArea.scrollHeight;
+        chatArea.scrollTop = chatArea.scrollHeight;
     }
 
-    
-    
 
-    
+
+
+
 
 
 

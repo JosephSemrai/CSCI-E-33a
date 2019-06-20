@@ -1,15 +1,16 @@
 import os
+import json
+import uuid
 
+from sqlalchemy import create_engine
 from collections import OrderedDict
 from flask import Flask, session, request, render_template, redirect, url_for, jsonify, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_socketio import SocketIO, emit
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 # import table definitions
 from models import *
-
-usersList = []
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "bgsdguhwguwr"
@@ -38,8 +39,8 @@ class Channel:
         self.name = name
         self.messages = []
 
-    def newMessage(self, user, content, time):
-        message = {"content": content, "user": user, "time":time}
+    def newMessage(self, uuid, content, time):
+        message = {"uuid": uuid, "username": str(User.query.filter_by(uuid=uuid).first().username), "content": content, "time":time}
         self.messages.append(message)
         #deletes messages past the past 100
         while len(self.messages) > 100:
@@ -85,7 +86,7 @@ def signup():
             return redirect(url_for('signup'))
 
         # create new user with the form data. Hash the password so plaintext version isn't saved.
-        new_user = User(username=username, password=generate_password_hash(password, method='sha256'))
+        new_user = User(username=username, password=generate_password_hash(password, method='sha256'), uuid=uuid.uuid4())
 
         # add the new user to the database
         db.session.add(new_user)
@@ -102,12 +103,8 @@ def logout():
 @app.route("/main", methods=["GET","POST"])
 @login_required
 def main():
-    if request.method == "POST":
-        requestedUsername = request.form.get("usernameInput")
-        if requestedUsername in usersList:
-            return render_template("index.html", error="Username already exists!")
-        session["username"] = requestedUsername
-    return render_template("main.html", channels=channels)
+    print(type(current_user))
+    return render_template("main.html", channels=channels, currentuser=current_user)
 
 
 @app.route("/fetchChannel", methods=["POST"])
@@ -133,13 +130,14 @@ def updateChannels():
 @socketio.on("new message")
 def newMessage(data):
     messageChannel = data["channel"]
-    messageContent = data["content"]
-    messageUser = data["user"]
-    messageTime = data["time"]
-    channels[messageChannel].newMessage(user=messageUser, content=messageContent, time=messageTime)
+    channels[messageChannel].newMessage(uuid=data["uuid"], content=data["content"], time=data["time"])
     emit("chat update", channels[messageChannel].messages[-1], broadcast=True)
 
 def run():
+    # RUN THIS TO DROP THE USERS TABLE
+    # engine = create_engine(os.getenv("DATABASE_URL"))
+    # User.__table__.drop(engine)
+
     # Create tables based on each table definition in `models`
     print("MAIN EXECUTED")
     db.create_all()
