@@ -137,39 +137,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function createMessage(data) {
-        let chatItem = document.createElement('div');
-        chatItem.className = "chatItem";
+        let nodes = document.querySelectorAll('.chatDiv'); //gets all inner chat divs
+        let lastChat = nodes[nodes.length - 1];
+        if (document.querySelector('.chatDiv') && lastChat.childNodes[0].childNodes[0].innerHTML == data.username) { //if there is at least one chat
+
+            // IF ITS THE SAME USER AS THE LAST WHO JUST SENT A MESSAGE
+            let chatContents = document.createElement('p');
+            chatContents.className = "chatContents";
+            chatContents.innerHTML = data.content;
+            lastChat.append(chatContents);
+
+        } else {
+            let chatItem = document.createElement('div');
+            chatItem.className = "chatItem";
 
 
-        let chatProfileImg = document.createElement('div');
-        chatProfileImg.className = "chatProfileImg";
-        let chatDiv = document.createElement('div');
-        chatDiv.className = "chatDiv";
-        let chatContents = document.createElement('p');
-        chatContents.className = "chatContents";
-        let chatUser = document.createElement('p');
-        chatUser.className = "chatUser";
-        let chatTime = document.createElement('time');
-        chatTime.className = "chatTime";
-        chatTime.dateTime = data.time;
-        let chatHeading = document.createElement('div');
-        chatHeading.className = "chatHeading";
+            let chatProfileImg = document.createElement('div');
+            chatProfileImg.className = "chatProfileImg";
+            let chatDiv = document.createElement('div');
+            chatDiv.className = "chatDiv";
+            let chatContents = document.createElement('p');
+            chatContents.className = "chatContents";
+            let chatUser = document.createElement('p');
+            chatUser.className = "chatUser";
+            let chatTime = document.createElement('time');
+            chatTime.className = "chatTime";
+            chatTime.dateTime = data.time;
+            let chatHeading = document.createElement('div');
+            chatHeading.className = "chatHeading";
 
-        chatHeading.append(chatUser);
-        chatHeading.append(chatTime);
+            chatHeading.append(chatUser);
+            chatHeading.append(chatTime);
 
-        chatContents.innerHTML = data.content;
-        chatUser.innerHTML = data.username;
-        chatTime.innerHTML = moment.unix(data.time).calendar();
+            chatContents.innerHTML = data.content;
+            chatUser.innerHTML = data.username;
+            chatTime.innerHTML = moment.unix(data.time).calendar();
 
 
-        chatDiv.append(chatHeading);
-        chatDiv.append(chatContents);
+            chatDiv.append(chatHeading);
+            chatDiv.append(chatContents);
 
-        chatItem.append(chatProfileImg);
-        chatItem.append(chatDiv);
+            chatItem.append(chatProfileImg);
+            chatItem.append(chatDiv);
 
-        document.querySelector("#chatArea").append(chatItem)
+            document.querySelector("#chatArea").append(chatItem)
+        }
+
 
         let chatArea = document.getElementById('chatArea');
         chatArea.scrollTop = chatArea.scrollHeight;
@@ -202,6 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return true;
     }
+
+
+
+
 
 
 
