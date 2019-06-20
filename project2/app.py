@@ -91,6 +91,7 @@ def signup():
         # add the new user to the database
         db.session.add(new_user)
         db.session.commit()
+        socketio.emit("users update", broadcast=True) # uses socketio.emit because it is out of the context/namespace of the @socketio.on endpoint
 
         return redirect(url_for('login'))
 
@@ -103,15 +104,25 @@ def logout():
 @app.route("/main", methods=["GET","POST"])
 @login_required
 def main():
-    print(type(current_user))
-    return render_template("main.html", channels=channels, currentuser=current_user)
+    return render_template("main.html", channels=channels, currentuser=current_user, allusers = User.query.all())
+
+@app.route("/fetchServerUsers", methods=["POST"])
+def fetchServerUsers():
+    allusers = User.query.all()
+    sanitizedUsers = []
+    for user in allusers:
+        sanitizedUsers.append({"username": user.username})
+    return jsonify({"success": True, "allusers": sanitizedUsers})
+
 
 
 @app.route("/fetchChannel", methods=["POST"])
 def fetchChannel():
     requestedChannel = request.form.get("channelName")
-    print(channels[requestedChannel].messages)
-    return jsonify({"success": True, "messages": channels[requestedChannel].messages})
+    clientMessages = []
+    for message in channels[requestedChannel].messages: # Gets all the messages of the channel and creates a new list, only returning the username, content, and time rather than everything including the sensitive data
+        clientMessages.append({"username": message["username"],"content":message["content"], "time":message["time"]})
+    return jsonify({"success": True, "messages": clientMessages})
 
 @socketio.on("create channel")
 def createChannel(data):

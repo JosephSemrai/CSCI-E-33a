@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var username = localStorage.getItem('username');
     var uuid = localStorage.getItem('uuid');
 
+    // Loads user panel
+    updateUsersPanel();
+
 
 
 
@@ -172,6 +175,33 @@ document.addEventListener('DOMContentLoaded', () => {
         chatArea.scrollTop = chatArea.scrollHeight;
     }
 
+
+    // user update dealings
+    socket.on("users update", () => {
+        updateUsersPanel();
+    });
+
+    function updateUsersPanel() {
+        const request = new XMLHttpRequest();
+        request.open('POST', '/fetchServerUsers');
+
+        //callback
+        request.onload = () => {
+            // Extract JSON data from request
+            const data = JSON.parse(request.responseText);
+            if (data["allusers"]) {
+                document.querySelector('#offlineUsers').innerHTML = "";
+                for (var key in data["allusers"]) {
+                    document.querySelector('#offlineUsers').append(data["allusers"][key].username);
+                }
+            }
+
+        }
+
+        request.send();
+
+        return true;
+    }
 
 
 
