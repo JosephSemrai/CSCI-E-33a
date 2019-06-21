@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <script>
+<head>
+  <script>
     localStorage.setItem('username', "{{currentuser.username}}");
     localStorage.setItem('uuid', "{{currentuser.uuid}}");
-    </script>
-    {% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  
-    <title>{% block title %}{% endblock %} | Flack</title>
-    {% endblock %}
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <!-- Bootstrap, MD CSS -->
-    <link rel="stylesheet"
-      href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-      integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-    <!-- Main CSS -->
-    <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet">
-  
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/moment.js') }}"></script>
-  </head>
+  </script>
+  {% block head %}
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>{% block title %}{% endblock %} | Flack</title>
+  {% endblock %}
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- Bootstrap, MD CSS -->
+  <link rel="stylesheet"
+    href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+    integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+  <!-- Main CSS -->
+  <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet">
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+</head>
 
 <body>
+  <!-- DROPZONE -->
+  <div style="visibility:hidden; opacity:0;" class="dropzone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+      <div class="dropzoneContent"> <i class="fas fa-cloud-upload-alt"></i> DROP FILE TO UPLOAD</div> 
+  </div>
   <!-- CHANNEL CREATION MODAL -->
   <div class="modal fade" id="channelModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -64,49 +68,53 @@
   <!-- MAIN CONTAINER -->
   <div class="container-fluid" style="min-height:100%; min-width:100%s">
     <div class="row fixed-top" style="height:5vh; min-width:100vw; margin:0; padding:0; background-color:green">
-    <h1 id="debugHeading" style="font-size: 1rem;">YOU SHOULD NOT BE SEEING THIS</h1>
+      <h1 id="debugHeading" style="font-size: 1rem;">YOU SHOULD NOT BE SEEING THIS</h1>
     </div>
     <div class="row fixed-bottom" style="height:95vh; min-width:100vw; flex-wrap:nowrap;padding:0;margin:0;">
       <div class="col" id="leftChannelArea" style="flex: 17em 0 0;margin:0;padding:0;height:100%;">
 
-          <div id="channelIntro">
-            <div id="channelIntroContent">
-                <p style="font-weight:bold; font-size:1.6rem;margin-bottom:0;">Welcome to Test Server!</p>
-                <p style="font-size: .8rem;">This server would be more fun with friends! Send your first invite by copying the link in your address bar.</p>
-            </div>
+        <div id="channelIntro">
+          <div id="channelIntroContent">
+            <p style="font-weight:bold; font-size:1.6rem;margin-bottom:0;">Welcome to Test Server!</p>
+            <p style="font-size: .8rem;">This server would be more fun with friends! Send your first invite by copying
+              the link in your address bar.</p>
           </div>
-          
-          
-          
-          <div id="channel-list">
-            {% block firstcolumn %}
-            {% for channel in channels.values() -%}
-            <button value="{{channel.name}}" class="btn btn-danger channelListButton">{{channel.name}}</button>
-            {%- endfor %}
-            {% endblock %}
-          </div>
+        </div>
+
+
+
+        <div id="channel-list">
+          {% block firstcolumn %}
+          {% for channel in channels.values() -%}
+          <button value="{{channel.name}}" class="btn btn-danger channelListButton">{{channel.name}}</button>
+          {%- endfor %}
+          {% endblock %}
+        </div>
 
         <div id="channelSettings">
           <button type="button" class="btn btn-primary" id="addChannel" data-toggle="modal"
-          data-target="#channelModal">Create Channel</button>
+            data-target="#channelModal">Create Channel</button>
         </div>
 
 
       </div>
 
       <div class="col" id="middleChatArea">
-        <div id="titleArea"><p id="chatTitle">Chat</p></div>
+        <div id="titleArea">
+          <p id="chatTitle">Chat</p>
+        </div>
         <div id="chatArea"></div>
         <div id="messageArea">
-                <input type="text" class="form-control" type="text" id="messageBox" placeholder="Send a message in #ADD THIS FUNCTIONALITY LATER">
+          <input type="text" class="form-control" type="text" id="messageBox"
+            placeholder="Send a message in #ADD THIS FUNCTIONALITY LATER">
         </div>
-        
-      
+
+
       </div>
 
       <div class="col" id="rightUserArea" style="flex: 0 0 20em;margin:0;padding:0;">
         <div id="rightUserIntro">
-            <p style="font-weight:bold; font-size:1.6rem;text-align:center; width:100%; margin:1rem;">ADD TOOLS HERE</p>
+          <p style="font-weight:bold; font-size:1.6rem;text-align:center; width:100%; margin:1rem;">ADD TOOLS HERE</p>
 
         </div>
 
@@ -116,9 +124,9 @@
 
           </div>
           <div id="offlineUsers">
-              
+
           </div>
-          
+
 
 
           <hr>

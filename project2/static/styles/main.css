@@ -158,6 +158,15 @@
 .chatContents {
     margin: 0;
     padding: 0;
+    max-width:100%;
+    word-break: break-word;
+}
+
+.chatContentsAttachment {
+    margin: 0;
+    padding: 0;
+    max-width:100%;
+    word-break: break-word;
 }
 
 .chatUser {
@@ -209,4 +218,29 @@
     align-items: flex-start;
     align-content: flex-start;
     overflow: auto;
+}
+
+/* DROPZONE */
+div.dropzone
+{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    /* positions to point 0,0 - required for z-index */
+    position: fixed; top: 0; left: 0; 
+    /* above all elements, even if z-index is used elsewhere
+       it can be lowered as needed, but this value surpasses
+       all elements when used on YouTube for example. */
+    z-index: 9999999999;               
+    /* takes up 100% of page */
+    width: 100%; height: 100%;         
+    /* dim the page with 50% black background when visible */
+    background-color: rgba(0,0,0,0.5);
+    /* a nice fade effect, visibility toggles after 175ms, opacity will animate for 175ms. note display:none cannot be animated.  */
+    transition: visibility 175ms, opacity 175ms;
+}
+
+div.dropzoneContent {
+    font-size: 5rem;
+    font-weight: bold;
 }

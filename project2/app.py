@@ -39,8 +39,8 @@ class Channel:
         self.name = name
         self.messages = []
 
-    def newMessage(self, uuid, content, time):
-        message = {"uuid": uuid, "username": str(User.query.filter_by(uuid=uuid).first().username), "content": content, "time":time}
+    def newMessage(self, type, uuid, content, time):
+        message = {"type": type, "uuid": uuid, "username": str(User.query.filter_by(uuid=uuid).first().username), "content": content, "time":time}
         self.messages.append(message)
         #deletes messages past the past 100
         while len(self.messages) > 100:
@@ -114,19 +114,23 @@ def fetchServerUsers():
         sanitizedUsers.append({"username": user.username})
     return jsonify({"success": True, "allusers": sanitizedUsers})
 
-
-
 @app.route("/fetchChannel", methods=["POST"])
 def fetchChannel():
     requestedChannel = request.form.get("channelName")
     clientMessages = []
     for message in channels[requestedChannel].messages: # Gets all the messages of the channel and creates a new list, only returning the username, content, and time rather than everything including the sensitive data
-        clientMessages.append({"username": message["username"],"content":message["content"], "time":message["time"]})
+        clientMessages.append({"type": message["type"], "username": message["username"],"content":message["content"], "time":message["time"]})
     return jsonify({"success": True, "messages": clientMessages})
+
+# @app.route("/sendAttachment", methods=["POST"])
+# def sendAttachment():
+#     newFile = request.form.get("file")
+#     print(type(newFile))
+#     return jsonify({"success": True, "messages": "clientMessages"})
 
 @socketio.on("create channel")
 def createChannel(data):
-    channelName = data["channelname"]
+    channelName = data["channelname"].replace(' ','-').lower()
     newChannel = Channel(channelName)
     channels[channelName] = newChannel;
     print(f"Added channel {channelName}")
@@ -141,7 +145,20 @@ def updateChannels():
 @socketio.on("new message")
 def newMessage(data):
     messageChannel = data["channel"]
-    channels[messageChannel].newMessage(uuid=data["uuid"], content=data["content"], time=data["time"])
+    channels[messageChannel].newMessage(type=data["type"], uuid=data["uuid"], content=data["content"], time=data["time"])
+    emit("chat update", channels[messageChannel].messages[-1], broadcast=True)
+
+@socketio.on("new attachment")
+def newMessage(data):
+    newFile = data["content"]
+    messageChannel = data["channel"]
+
+    # f = open('newfile','w+b')
+    # f.write(newFile)
+    # f.close()
+    # print(newFile)
+    print(newFile)
+    channels[messageChannel].newMessage(type=data["type"], uuid=data["uuid"], content=data["content"], time=data["time"])
     emit("chat update", channels[messageChannel].messages[-1], broadcast=True)
 
 def run():
