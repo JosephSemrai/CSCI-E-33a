@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.querySelector('.chatDiv') && lastChat.childNodes[0].childNodes[0].innerHTML == data.username) { //if there is at least one chat and if it's the same user
 
             if ((data.type) != "message") { //if it's an attachment
-                alert("File!");
                 blob = dataURItoBlob(data.content);
                 var url = window.URL.createObjectURL(blob);
 
@@ -165,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
 
             if ((data.type) != "message") { //if it's an attachment
-                alert("File!");
                 let chatItem = document.createElement('div');
                 chatItem.className = "chatItem";
 
@@ -326,8 +324,6 @@ function dropHandler(ev) {
                 var file = ev.dataTransfer.items[i].getAsFile();
                 console.log('... file[' + i + '].name = ' + file.name);
                 sendAttachment(file);
-                alert(file.type);
-
             }
         }
     } else {

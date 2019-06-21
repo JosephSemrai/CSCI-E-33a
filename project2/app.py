@@ -157,7 +157,6 @@ def newMessage(data):
     # f.write(newFile)
     # f.close()
     # print(newFile)
-    print(newFile)
     channels[messageChannel].newMessage(type=data["type"], uuid=data["uuid"], content=data["content"], time=data["time"])
     emit("chat update", channels[messageChannel].messages[-1], broadcast=True)
 
