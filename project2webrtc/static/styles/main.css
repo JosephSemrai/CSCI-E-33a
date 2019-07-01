@@ -1,0 +1,246 @@
+.channelListButton {
+    width: 100%;
+    border-top: 2px black solid;
+    margin: 0px;
+    text-align: left;
+}
+
+.channelListButton::before {
+    content: "#";
+}
+
+#leftChannelArea {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(241, 241, 241);
+}
+
+#channelIntro {
+    display: flex;
+    background-color: rgb(216, 216, 216);
+    z-index:9000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);
+    flex: 1 1 5%;
+    min-height: 12rem;
+    max-height: 12rem;
+}
+
+#channelIntroContent {
+    margin: 1rem;
+}
+
+#channel-list {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 85%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    overflow: auto;
+}
+
+#channelSettings {
+    display: flex;
+    flex: 1 1 10%;
+    min-height: 5rem;
+    max-height: 5rem;
+    background: rgba(0, 0, 0, 0.014);
+}
+
+#addChannel {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    margin: 0px;
+    color: white;
+    border-radius: 0px;
+}
+
+/* Chat area */
+
+#middleChatArea {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
+}
+
+#titleArea {
+    display: flex;
+    z-index:9000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);
+    flex: 1 1 5%;
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+#chatTitle {
+    font-weight: bold;
+    font-size: 1.75rem;
+    margin: .5rem;
+    margin-left: 2rem;
+}
+
+#chatTitle::before {
+    content: "#";
+}
+
+#chatArea {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 85%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    overflow: auto;
+}
+
+#messageArea {
+    display: flex;
+    flex: 1 1 10%;
+    min-height: 5rem;
+    max-height: 5rem;
+    background: rgba(0, 0, 0, 0.014);
+
+}
+
+#messageBox {
+    min-width: 100%;
+}
+
+/* Overrides bootstrap, ALSO RESPONSIBLE FOR THE ABOVE MESSAGE BOX */
+.bmd-form-group {
+    min-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+
+/* Received Chat Styles */
+.chatItem {
+    display: inline-flex;
+    width: 95%;
+    border-top: rgb(216, 216, 216) 1px solid;
+}
+
+
+.chatProfileImg {
+    margin:1rem;
+    display: inline-block;
+    vertical-align: top;
+
+    background-image: url('/static/img/profile-placeholder.png');
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+}
+
+.chatDiv {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    display: inline-block;
+}
+
+.chatContents {
+    margin: 0;
+    padding: 0;
+    max-width:100%;
+    word-break: break-word;
+}
+
+.chatContentsAttachment {
+    margin: 0;
+    padding: 0;
+    max-width:100%;
+    word-break: break-word;
+}
+
+.chatUser {
+    font-weight: bold;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.chatTime {
+    display: inline;
+    margin-left: .5rem;
+    font-size: 80%;
+    padding: 0;
+    color: rgb(122, 122, 122);
+}
+
+#rightUserArea {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(241, 241, 241);
+}
+
+#rightUserIntro {
+    display: flex;
+    background-color: rgb(216, 216, 216);
+    z-index:9000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);
+    flex: 1 1 5%;
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+#rightUserIntroContent {
+    height:100%;
+    width:100%;
+}
+
+#rightUsers {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 95%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    overflow: auto;
+}
+
+/* DROPZONE */
+div.dropzone
+{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    /* positions to point 0,0 - required for z-index */
+    position: fixed; top: 0; left: 0; 
+    /* above all elements, even if z-index is used elsewhere
+       it can be lowered as needed, but this value surpasses
+       all elements when used on YouTube for example. */
+    z-index: 9999999999;               
+    /* takes up 100% of page */
+    width: 100%; height: 100%;         
+    /* dim the page with 50% black background when visible */
+    background-color: rgba(0,0,0,0.5);
+    /* a nice fade effect, visibility toggles after 175ms, opacity will animate for 175ms. note display:none cannot be animated.  */
+    transition: visibility 175ms, opacity 175ms;
+}
+
+div.dropzoneContent {
+    font-size: 5rem;
+    font-weight: bold;
+}

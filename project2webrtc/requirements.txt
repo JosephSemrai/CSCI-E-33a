@@ -1,0 +1,5 @@
+Flask
+Flask-SocketIO
+sqlalchemy
+werkzeug.security
+sqlalchemy_utils
