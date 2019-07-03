@@ -1,0 +1,103 @@
+<html>
+      <head>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+            <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+          <title>{% block title %}{% endblock %}</title>
+      </head>
+      <body>
+          
+            <div class="container-fluid">
+                <!-- FLASHED MESSAGES -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Message: </strong> {{message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- END FLASHED MESSAGES -->
+            
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                      <a class="navbar-brand" href="{ url 'menu' }">Shop</a>
+                      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <!-- Pizza -->
+                        {% if "/menu/pizza" == request.path %}
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'menu' 'pizza' %}">Pizza</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'menu' 'pizza' %}">Pizza</a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Subs -->
+                        {% if "/menu/sub" == request.path %}
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'menu' 'sub' %}">Subs</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'menu' 'sub' %}">Subs</a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Pasta -->
+                        {% if "/menu/pasta" == request.path %}
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'menu' 'pasta' %}">Pasta</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'menu' 'pasta' %}">Pasta</a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Salads -->
+                        {% if "/menu/salad" == request.path %}
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'menu' 'salad' %}">Salads</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'menu' 'salad' %}">Salads</a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Dinner Platters -->
+                        {% if "/menu/platter" == request.path %}
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'menu' 'platter' %}">Dinner Platters</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'menu' 'platter' %}">Dinner Platters</a>
+                        </li>
+                        {% endif %}
+
+                      </ul>
+                      <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                      </form>
+                    </div>
+                  </nav>
+                    {% block body %}
+                    {% endblock %}
+            </div>
+          
+      </body>
+  </html>

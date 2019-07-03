@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+  {% block title %}
+      Home
+  {% endblock %}
+
+  {% block body %}
+      <h1>Home</h1>
+      <button onclick="window.location.href = '{% url 'signup' %}'">Click Here</button>
+  {% endblock %}

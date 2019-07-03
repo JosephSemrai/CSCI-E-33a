@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+Signup
+{% endblock %}
+{% block body %}
+<h1>Sign Up</h1>
+
+<form action="{% url 'signup' %}" method="post">
+    {% csrf_token %}
+    <input name="email" placeholder="Enter your email..." type="text"/>
+    <input name="username" placeholder="Enter your username..." type="text"/>
+    <input name="password" placeholder="Enter your password..." type="password"/>
+    <input type="submit" value="Sign Up"/>
+</form>
+{% endblock %}
