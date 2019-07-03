@@ -52,10 +52,13 @@ def menu_view(request, category):
     # elif category == "pasta" or category == "salads":
     #     colnum = 2
     category = category.capitalize()
+    cart = getCart(request)
+    print(f"Created cart: {cart.orderStatus}")
     
     context = {
         'menuitems':globals()[category].objects.all(),
-        'itemcategory': category
+        'itemcategory': category,
+        'cart': cart
     }
 
     return render(request, "menu.html", context)
@@ -75,3 +78,21 @@ def orderitem_view(request, category):
 
     return HttpResponseRedirect(reverse('menu'))
 
+def getCart(request):
+    print("DEBUG")
+    for item in request.user.totalorder_set.all():
+        print(item.orderStatus)
+        print(f"Username: {item.user.username}")
+    try:
+        lastOrder = request.user.totalorder_set.latest('id') #Gets the last cart for the specific user
+    except:
+        print("EXCEPTION EXCEPTION EXCEPTION")
+        lastOrder = TotalOrder.create(request.user, 0.00, "In Progress")
+
+    if lastOrder == None or lastOrder.orderStatus != "In Progress":
+        lastOrder = TotalOrder.create(request.user, 0.00, "In Progress")
+        getCart(request)
+    
+    lastOrder.save()
+
+    return lastOrder

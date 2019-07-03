@@ -6,31 +6,44 @@ Order
 
 {% block body %}
 <h1>Welcome, {{user.username}}</h1>
+<div class="row">
+    <div class="card m-3 col-8">
+        {% for item in menuitems %}
+        <div class="card m-3 w-75">
+            <h5 class="card-header">{{item.name}}
 
-{% for item in menuitems %}
-<div class="card">
-        <h5 class="card-header">{{item.name}} 
-            
-            {% if item.toppingAmount == 1 %}
+                {% if item.toppingAmount == 1 %}
                 ({{item.toppingAmount}} topping)
                 {% elif item.toppingAmount %}
                 ({{item.toppingAmount}} toppings)
                 {% endif %}
-            
-            </h5>
-        <div class="card-body">
-        {% if item.smallPrice %}
-          <h5 class="card-title">Small - {{item.smallPrice}}</h5>
-          <h5 class="card-title">Large - {{item.largePrice}}</h5>
-          {% else %}
-          <h5 class="card-title">{{item.price}}</h5>
-          {% endif %}
-            
 
-          <p class="card-text">{{item.id}}</p>
-          
-          <a href="{% url 'order' category=itemcategory %}?item_id={{item.id}}" class="btn btn-primary">Go somewhere</a>
+            </h5>
+            <div class="card-body">
+                {% if item.smallPrice %}
+                <h5 class="card-title">Small - {{item.smallPrice}}</h5>
+                <h5 class="card-title">Large - {{item.largePrice}}</h5>
+                {% else %}
+                <h5 class="card-title">{{item.price}}</h5>
+                {% endif %}
+
+
+                <p class="card-text">{{item.id}}</p>
+
+                <a href="{% url 'order' category=itemcategory %}?item_id={{item.id}}" class="btn btn-primary">Go
+                    somewhere</a>
+            </div>
         </div>
-      </div>
-{% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="card m-3 col">
+        Your Cart
+        {{cart.orderStatus}}
+        {{cart.user.username}}
+    </div>
+
+</div>
+
+
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -41,15 +42,25 @@ class Platter(models.Model):
     largePrice = models.DecimalField(max_digits=4,decimal_places=2)
 
 class TotalOrder(models.Model):
-    user = models.CharField(max_length=20)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     orderPrice = models.DecimalField(max_digits=4,decimal_places=2)
+    orderStatus = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"Order #{self.id}"
+
+    @classmethod
+    def create(cls, user, orderPrice, orderStatus):
+        order = cls(user = user, orderPrice = orderPrice, orderStatus = orderStatus)
+        return order
 
 class ItemOrder(models.Model):
     itemName = models.CharField(max_length=20)
     itemPrice = models.DecimalField(max_digits=4,decimal_places=2)
     toppings = models.ManyToManyField(Topping, blank=True, related_name="orders")
     addons = models.ManyToManyField(Addon, blank=True, related_name="orders")
-    itemStatus = models.CharField(max_length=20)
     itemPrice = models.DecimalField(max_digits=4,decimal_places=2)
+    itemStatus = models.CharField(max_length=20)
+
     totalOrder = models.ForeignKey(TotalOrder, on_delete=models.CASCADE) #OneToMany Relationship where an many items can be linked to one total order
 
