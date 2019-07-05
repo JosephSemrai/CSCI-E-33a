@@ -8,32 +8,36 @@ Order
 <h1>Welcome, {{user.username}}</h1>
 <div class="row">
     <div class="card m-3 col-8">
-        {% for item in menuitems %}
-        <div class="card m-3 w-75">
-            <h5 class="card-header">{{item.name}}
-
-                {% if item.toppingAmount == 1 %}
-                ({{item.toppingAmount}} topping)
-                {% elif item.toppingAmount %}
-                ({{item.toppingAmount}} toppings)
-                {% endif %}
-
-            </h5>
+       
             <div class="card-body">
+
+                <form action="url 'addtocart'" method="post">
+                
                 {% if item.smallPrice %}
-                <h5 class="card-title">Small - {{item.smallPrice}}</h5>
-                <h5 class="card-title">Large - {{item.largePrice}}</h5>
+                <input type="radio" name="price" value="{{item.smallPrice}}">Small - {{item.smallPrice}}<br>
+                <input type="radio" name="price" value="{{item.largePrice}}">Large - {{item.largePrice}}<br>
                 {% else %}
+                <input type="hidden" name="price" value="{{item.price}}">
                 <h5 class="card-title">{{item.price}}</h5>
                 {% endif %}
 
+                    {{itemcategory}}
+
+                {% if itemcategory is 'Pizza' %}
+                {% for topping in toppings %}
+                <input type="checkbox" name="topping" value="{{topping.name}}">{{topping.name}}<br>
+                {% endfor %}
+                BRUHHH
+                {% endif %}
+
+                <button type="submit" value="Submit">Add to cart</button>
+
+            </form>
 
                 <p class="card-text">{{item.id}}</p>
 
-                <a href="{% url 'order' category=itemcategory %}?item_id={{item.id}}" class="btn btn-primary">Add To Cart</a>
             </div>
         </div>
-        {% endfor %}
     </div>
 
     <div class="card m-3 col">

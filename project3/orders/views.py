@@ -57,7 +57,7 @@ def menu_view(request, category):
     
     context = {
         'menuitems':globals()[category].objects.all(),
-        'itemcategory': category,
+        'itemcategory': _(category),
         'cart': cart
     }
 
@@ -73,11 +73,19 @@ def orderitem_view(request, category):
     # category = category.capitalize().rsplit('/', 1)[-1]
 
     #ADD LOGIC AND SUCH FOR SPECIFIC ITEMS HERE BY FETCHING THE ITEM FIRST, ONLY ADD TO ORDER WHEN DONE
-
     item = globals()[category].objects.get(id=itemid)
+    context = {
+        'toppings':globals()["Topping"].objects.all(),
+        'itemcategory': category, 
+        'item':item 
+    }
 
-    return HttpResponseRedirect(reverse('menu'))
+    print(category)
 
+    return render(request, "orderscreen.html", context)
+
+def addtocart_view(request, category):
+    return render(request, "orderscreen.html")
 def getCart(request):
     print("DEBUG")
     for item in request.user.totalorder_set.all():
