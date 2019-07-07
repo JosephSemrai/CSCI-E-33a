@@ -5,7 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.db import IntegrityError
+from django.db.models import Sum
 from .models import *
+from decimal import Decimal
 
 # Create your views here.
 def index(request):
@@ -53,11 +55,10 @@ def menu_view(request, category):
     #     colnum = 2
     category = category.capitalize()
     cart = getCart(request)
-    print(f"Created cart: {cart.orderStatus}")
     
     context = {
         'menuitems':globals()[category].objects.all(),
-        'itemcategory': _(category),
+        'itemcategory': category,
         'cart': cart
     }
 
@@ -76,21 +77,56 @@ def orderitem_view(request, category):
     item = globals()[category].objects.get(id=itemid)
     context = {
         'toppings':globals()["Topping"].objects.all(),
+        'addons': globals()["Addon"].objects.all(),
         'itemcategory': category, 
-        'item':item 
+        'item':item,
+        'cart': getCart(request)
     }
-
-    print(category)
 
     return render(request, "orderscreen.html", context)
 
-def addtocart_view(request, category):
-    return render(request, "orderscreen.html")
+def addtocart_view(request):
+    priceAdjustment = 0;
+    cart = getCart(request)
+    
+    # Gets data from form
+    try:
+        name = request.POST['name']
+        price = request.POST['price']
+        toppings = request.POST.getlist('topping')
+        addons = request.POST.getlist('addon')
+        itemStatus = "Sent to Kitchen"
+    except:
+        messages.error(request, "There was an error creating your order. Did you fill out the entire form?")
+        return HttpResponseRedirect(reverse('menu'))
+
+    # Creates order
+    order = ItemOrder.objects.create(itemName=name,itemPrice=price,totalOrder=cart)
+
+    # Adds toppings to order
+    for topping in toppings:
+        print(topping)
+        addtopping = Topping.objects.get(name=topping)
+        order.toppings.add(addtopping)
+
+    # Adds addons to order
+    for addon in addons:
+        addaddon = Addon.objects.get(name=addon)
+        priceAdjustment += Decimal(addaddon.price)
+        order.addons.add(addaddon)
+
+    # Adds the price adjustment to the order
+    order.itemPrice = Decimal(order.itemPrice) + Decimal(priceAdjustment)
+    order.save()
+
+    return HttpResponseRedirect(reverse('menu'))
+
+def finishorder_view(request):
+    newCart(request)
+    messages.success(request, "Sent your order!")
+    return HttpResponseRedirect(reverse('menu'))
+
 def getCart(request):
-    print("DEBUG")
-    for item in request.user.totalorder_set.all():
-        print(item.orderStatus)
-        print(f"Username: {item.user.username}")
     try:
         lastOrder = request.user.totalorder_set.latest('id') #Gets the last cart for the specific user
     except:
@@ -101,6 +137,18 @@ def getCart(request):
         lastOrder = TotalOrder.create(request.user, 0.00, "In Progress")
         getCart(request)
     
+    # Calculates the order price
+    total = lastOrder.itemorder_set.aggregate(Sum('itemPrice'))['itemPrice__sum']
+    if total is not None:
+        lastOrder.orderPrice = total
     lastOrder.save()
 
     return lastOrder
+
+def newCart(request):
+    previousCart = getCart(request)
+    previousCart.orderStatus = "Submitted"
+
+    # Creates the new cart
+    newCart = TotalOrder.create(request.user, 0.00, "In Progress")
+    newCart.save()

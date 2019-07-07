@@ -59,8 +59,11 @@ class ItemOrder(models.Model):
     itemPrice = models.DecimalField(max_digits=4,decimal_places=2)
     toppings = models.ManyToManyField(Topping, blank=True, related_name="orders")
     addons = models.ManyToManyField(Addon, blank=True, related_name="orders")
-    itemPrice = models.DecimalField(max_digits=4,decimal_places=2)
     itemStatus = models.CharField(max_length=20)
-
     totalOrder = models.ForeignKey(TotalOrder, on_delete=models.CASCADE) #OneToMany Relationship where an many items can be linked to one total order
+    
+    @classmethod
+    def create(cls, user, orderPrice, orderStatus):
+        order = cls(itemName = itemName, itemPrice = itemPrice, toppings = toppings, addons = addons, itemStatus = itemStatus, totalOrder = totalOrder)
+        return order
 

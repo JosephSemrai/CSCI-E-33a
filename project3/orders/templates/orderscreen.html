@@ -8,11 +8,16 @@ Order
 <h1>Welcome, {{user.username}}</h1>
 <div class="row">
     <div class="card m-3 col-8">
-       
-            <div class="card-body">
 
-                <form action="url 'addtocart'" method="post">
-                
+        <div class="card-body">
+                {{itemcategory}} | {{item.name}}
+
+            <form action="{% url 'addtocart'%}" method="post">
+                {% csrf_token %}
+
+
+                <input type="hidden" name="name" value="{{item.name}}">
+
                 {% if item.smallPrice %}
                 <input type="radio" name="price" value="{{item.smallPrice}}">Small - {{item.smallPrice}}<br>
                 <input type="radio" name="price" value="{{item.largePrice}}">Large - {{item.largePrice}}<br>
@@ -20,64 +25,72 @@ Order
                 <input type="hidden" name="price" value="{{item.price}}">
                 <h5 class="card-title">{{item.price}}</h5>
                 {% endif %}
+                
 
-                    {{itemcategory}}
-
-                {% if itemcategory is 'Pizza' %}
+                {% if itemcategory == 'Pizza' %}
+                <br>
+                <b>Toppings</b> <br>
                 {% for topping in toppings %}
                 <input type="checkbox" name="topping" value="{{topping.name}}">{{topping.name}}<br>
                 {% endfor %}
-                BRUHHH
+                {% endif %}
+
+                {% if itemcategory == 'Sub' %}
+                <br>
+                <b>Addons</b> <br>
+                {% for addon in addons %}
+                <input type="checkbox" name="addon" value="{{addon.name}}">{{addon.name}} | +{{addon.price}}<br>
+                {% endfor %}
                 {% endif %}
 
                 <button type="submit" value="Submit">Add to cart</button>
 
             </form>
 
-                <p class="card-text">{{item.id}}</p>
+            <p class="card-text">{{item.id}}</p>
 
+        </div>
+    </div>
+</div>
+
+<div class="card m-3 col">
+    <div class="card m-2">
+        <div class="card-body row">
+            <div class="col-8">
+                <h1><b>Your Cart</b></h1>
+                Order #{{cart.id}} | <b>{{cart.orderStatus}}</b> <br>
+            </div>
+            <div class="col align-self-center">
+                <h1 class="text-right my-auto text-success"><b>${{cart.orderPrice}}</b></h1>
             </div>
         </div>
     </div>
 
-    <div class="card m-3 col">
-        <div class="card m-2">
-            <div class="card-body row">
-                <div class="col-8">
-                        <h1><b>Your Cart</b></h1>
-                        Order #{{cart.id}} | <b>{{cart.orderStatus}}</b> <br>
-                </div>
-                <div class="col align-self-center">
-                        <h1 class="text-right my-auto text-success"><b>${{cart.orderPrice}}</b></h1>
-                </div>
-            </div> 
-        </div>
+    {% for item in cart.itemorder_set.all %}
+    <div class="card m-2">
+        <div class="card-body row">
+            <div class="col-8">
+                <h5><b>{{item.itemName}}</b></h5>
 
-        {% for item in cart.itemorder_set.all %}
-        <div class="card m-2">
-                <div class="card-body row">
-                    <div class="col-8">
-                            <h5><b>{{item.itemName}}</b></h5>
+                {% if item.toppings.all %}
+                <p class="p-0 m-0"><b>Toppings</b></p>
+                {% for topping in item.toppings.all %}
+                <li class="p-0 m-0">{{topping.name}}</li>
+                {% endfor %}
 
-                            {% if item.toppings.all %}
-                            <p class="p-0 m-0"><b>Toppings</b></p>
-                            {% for topping in item.toppings.all %}
-                            <li class="p-0 m-0">{{topping.name}}</li>
-                            {% endfor %}
+                {% endif %}
 
-                            {% endif %}
-                            
-                    </div>
-                    <div class="col align-self-center">
-                            <h4 class="text-right my-auto text-warning"><b>${{item.itemPrice}}</b></h4>
-                    </div>
-                </div> 
             </div>
-
-        {% endfor %}
-        
-
+            <div class="col align-self-center">
+                <h4 class="text-right my-auto text-warning"><b>${{item.itemPrice}}</b></h4>
+            </div>
+        </div>
     </div>
+
+    {% endfor %}
+
+
+</div>
 
 </div>
 
