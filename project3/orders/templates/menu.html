@@ -45,10 +45,12 @@ Order
                 </div>
                 <div class="col align-self-center">
                         <h1 class="text-right my-auto text-success"><b>${{cart.orderPrice}}</b></h1>
+                        {% if cart.itemorder_set.all %}
                         <form action="{% url 'finishorder'%}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="text-right btn btn-outline-primary float-right">Checkout</button>
                         </form>
+                        {% endif %}
                 </div>
         </div>
 
@@ -71,12 +73,17 @@ Order
                             {% for addon in item.addons.all %}
                             <li class="p-0 m-0">{{addon.name}} | + {{addon.price}}</li>
                             {% endfor %}
-
                             {% endif %}
                             
                     </div>
                     <div class="col align-self-center">
                             <h4 class="text-right my-auto text-warning"><b>${{item.itemPrice}}</b></h4>
+
+                            <form action="{% url 'removeitem'%}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="removeid" value="{{item.id}}">
+                                <button type="submit" class="text-right btn btn-outline-primary float-right">Remove Item</button>
+                            </form>
                     </div>
                 </div> 
             </div>

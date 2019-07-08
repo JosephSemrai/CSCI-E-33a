@@ -11,5 +11,6 @@ urlpatterns = [
     path("menu", views.defaultmenu_view, name="menu"),
     path("order/<str:category>", views.orderitem_view, name="order"),
     path("addtocart", views.addtocart_view, name="addtocart"),
-    path("finishorder", views.finishorder_view, name="finishorder")
+    path("finishorder", views.finishorder_view, name="finishorder"),
+    path("removeitem", views.removeitem_view, name="removeitem")
 ]

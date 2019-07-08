@@ -126,6 +126,11 @@ def finishorder_view(request):
     messages.success(request, "Sent your order!")
     return HttpResponseRedirect(reverse('menu'))
 
+def removeitem_view(request):
+    cart = getCart(request)
+    removeItem = cart.itemorder_set.all().filter(id=request.POST["removeid"]).delete()
+    return HttpResponseRedirect(reverse('menu'))
+
 def getCart(request):
     try:
         lastOrder = request.user.totalorder_set.latest('id') #Gets the last cart for the specific user
@@ -141,6 +146,8 @@ def getCart(request):
     total = lastOrder.itemorder_set.aggregate(Sum('itemPrice'))['itemPrice__sum']
     if total is not None:
         lastOrder.orderPrice = total
+    else:
+        lastOrder.orderPrice = 0.00 # Compensates if a user deletes all their items to which the first block does not execute
     lastOrder.save()
 
     return lastOrder
