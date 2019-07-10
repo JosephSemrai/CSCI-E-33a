@@ -27,11 +27,11 @@ Order
                 {% endif %}
                 
 
-                {% if itemcategory == 'Pizza' %}
+                {% if itemcategory == 'Pizza' and item.toppingAmount is not 0 %}
                 <br>
                 <b>Toppings</b> <br>
                 {% for topping in toppings %}
-                <input type="checkbox" name="topping" value="{{topping.name}}">{{topping.name}}<br>
+                <input class="toppingCheckbox" type="checkbox" name="topping" value="{{topping.name}}">{{topping.name}}<br>
                 {% endfor %}
                 {% endif %}
 
@@ -94,5 +94,20 @@ Order
 
 </div>
 
+{% if itemcategory == 'Pizza'%}
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        var limit = {{item.toppingAmount}};
+    $('input.toppingCheckbox').on('change', function(evt) {
+        if($('input.toppingCheckbox').siblings('input.toppingCheckbox:checked').length > limit) {
+            this.checked = false;
+            alert("You can only select {{item.toppingAmount}} toppings. Please upgrade your Pizza to support more toppings.")
+        }
+    });
+
+    });
+</script>
+
+{% endif %}
 
 {% endblock %}

@@ -152,6 +152,18 @@ def getCart(request):
 
     return lastOrder
 
+def vieworders_view(request):
+    user = request.user
+    orders = user.totalorder_set.all()
+
+    context = {
+        'orders': orders
+    }
+
+    
+    return render(request, "userorders.html", context)
+
+
 def newCart(request):
     previousCart = getCart(request)
     previousCart.orderStatus = "Submitted"
