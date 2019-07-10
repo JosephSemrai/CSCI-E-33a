@@ -5,45 +5,48 @@ Order
 {% endblock %}
 
 {% block body %}
-<h1>Welcome, {{user.username}}</h1>
+<h1 class="m-5">Welcome, {{user.username}} | Please select an item</h1>
 <div class="row">
-    <div class="card m-3 col-8">
-        {% for item in menuitems %}
-        <div class="card m-3 w-75">
-            <h5 class="card-header">{{item.name}}
-
-                {% if item.toppingAmount == 1 %}
-                ({{item.toppingAmount}} topping)
-                {% elif item.toppingAmount %}
-                ({{item.toppingAmount}} toppings)
-                {% endif %}
-
-            </h5>
-            <div class="card-body">
-                {% if item.smallPrice %}
-                <h5 class="card-title">Small - {{item.smallPrice}}</h5>
-                <h5 class="card-title">Large - {{item.largePrice}}</h5>
-                {% else %}
-                <h5 class="card-title">{{item.price}}</h5>
-                {% endif %}
-
-
-                <p class="card-text">{{item.id}}</p>
-
-                <a href="{% url 'order' category=itemcategory %}?item_id={{item.id}}" class="btn btn-primary">Add To Cart</a>
-            </div>
+    <div class="card bg-dark m-3 col-8">
+        <div class="row">
+                {% for item in menuitems %}
+                <div class="d-inline-flex p-2 card m-3 w-25 text-center">
+                    <h5 class="card-header">{{item.name}}
+        
+                        {% if item.toppingAmount == 1 %}
+                        ({{item.toppingAmount}} topping)
+                        {% elif item.toppingAmount %}
+                        ({{item.toppingAmount}} toppings)
+                        {% endif %}
+        
+                    </h5>
+                    <div class="card-body">
+                        {% if item.smallPrice %}
+                        <h5 class="card-title">Small - {{item.smallPrice}}</h5>
+                        <h5 class="card-title">Large - {{item.largePrice}}</h5>
+                        {% else %}
+                        <h5 class="card-title">{{item.price}}</h5>
+                        {% endif %}
+        
+        
+                        <p class="card-text">{{item.id}}</p>
+        
+                        <a href="{% url 'order' category=itemcategory %}?item_id={{item.id}}" class="btn btn-primary">Add To Cart</a>
+                    </div>
+                </div>
+                {% endfor %}
         </div>
-        {% endfor %}
+        
     </div>
 
     <div class="card m-3 col">
         
             <div class="card-body row">
-                <div class="col-8">
+                <div class="col">
                         <h1><b>Your Cart</b></h1>
                         Order #{{cart.id}} | <b>{{cart.orderStatus}}</b> <br>
                 </div>
-                <div class="col align-self-center">
+                <div class="col">
                         <h1 class="text-right my-auto text-success"><b>${{cart.orderPrice}}</b></h1>
                         {% if cart.itemorder_set.all %}
                         <form action="{% url 'finishorder'%}" method="post">
