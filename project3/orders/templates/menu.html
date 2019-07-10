@@ -22,14 +22,14 @@ Order
                     </h5>
                     <div class="card-body">
                         {% if item.smallPrice %}
-                        <h5 class="card-title">Small - {{item.smallPrice}}</h5>
-                        <h5 class="card-title">Large - {{item.largePrice}}</h5>
+                        <h5 class="card-title">Small - ${{item.smallPrice}}</h5>
+                        <h5 class="card-title">Large - ${{item.largePrice}}</h5>
                         {% else %}
-                        <h5 class="card-title">{{item.price}}</h5>
+                        <h5 class="card-title">${{item.price}}</h5>
                         {% endif %}
         
         
-                        <p class="card-text">{{item.id}}</p>
+                        <p class="card-text">Item ID - {{item.id}}</p>
         
                         <a href="{% url 'order' category=itemcategory %}?item_id={{item.id}}" class="btn btn-primary">Add To Cart</a>
                     </div>

@@ -157,6 +157,7 @@ def vieworders_view(request):
     orders = user.totalorder_set.all()
 
     context = {
+        'user': user,
         'orders': orders
     }
 
@@ -167,6 +168,7 @@ def vieworders_view(request):
 def newCart(request):
     previousCart = getCart(request)
     previousCart.orderStatus = "Submitted"
+    previousCart.save()
 
     # Creates the new cart
     newCart = TotalOrder.create(request.user, 0.00, "In Progress")

@@ -2,6 +2,8 @@
 
 Web Programming with Python and JavaScript
 
+## Note
 
-## TODO
-* Fix unintended behavior of current cart showing up in order history. Filter out the order history by showing orders without the "In Progress" status.
+---
+
+This project was rushed and should not be forked, looked to as a reference, or used in any capacity. It contains minimal styling, no unit checks, and other issues. This was meant to satisfy requirements for Project 3 without doing anything extra.

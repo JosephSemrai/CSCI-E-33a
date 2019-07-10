@@ -6,67 +6,59 @@ Order
 
 {% block body %}
 
-<h1>Here are your orders, {{user.username}}!</h1> 
+<h1>Here are your orders, {{user.username}}!</h1>
 
 {% for order in orders %}
+{% if order.orderStatus == 'Submitted' %}
 <div class="card m-3 col">
-        
+
         <div class="card-body row">
-            <div class="col-8">
-                    <h1><b>Your order</b></h1>
-                    Order #{{order.id}} | <b>{{order.orderStatus}}</b> <br>
-            </div>
-            <div class="col align-self-center">
-                    <h1 class="text-right my-auto text-success"><b>${{order.orderPrice}}</b></h1>
-                    {% if order.itemorder_set.all %}
-                    <form action="{% url 'finishorder'%}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="text-right btn btn-outline-primary float-right">Checkout</button>
-                    </form>
-                    {% endif %}
-            </div>
-    </div>
-
-    {% for item in order.itemorder_set.all %}
-    <div class="card m-2">
-            <div class="card-body row">
                 <div class="col-8">
-                        <h5><b>{{item.itemName}}</b></h5>
-
-                        {% if item.toppings.all %}
-                        <p class="p-0 m-0"><b>Toppings</b></p>
-                        {% for topping in item.toppings.all %}
-                        <li class="p-0 m-0">{{topping.name}}</li>
-                        {% endfor %}
-
-                        {% endif %}
-
-                        {% if item.addons.all %}
-                        <p class="p-0 m-0"><b>Addons</b></p>
-                        {% for addon in item.addons.all %}
-                        <li class="p-0 m-0">{{addon.name}} | + {{addon.price}}</li>
-                        {% endfor %}
-                        {% endif %}
-                        
+                        <h1><b>Order #{{order.id}}</b></h1>
+                        Status - <b>{{order.orderStatus}}</b> <br>
                 </div>
                 <div class="col align-self-center">
-                        <h4 class="text-right my-auto text-warning"><b>${{item.itemPrice}}</b></h4>
-
-                        <form action="{% url 'removeitem'%}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="removeid" value="{{item.id}}">
-                            <button type="submit" class="text-right btn btn-outline-primary float-right">Remove Item</button>
-                        </form>
+                        <h1 class="text-right my-auto text-success"><b>${{order.orderPrice}}</b></h1>
                 </div>
-            </div> 
         </div>
 
-    
+        {% for item in order.itemorder_set.all %}
+        <div class="card m-2">
+                <div class="card-body row">
+                        <div class="col-8">
+                                <h5><b>{{item.itemName}}</b></h5>
 
-    {% endfor %}
+                                {% if item.toppings.all %}
+                                <p class="p-0 m-0"><b>Toppings</b></p>
+                                {% for topping in item.toppings.all %}
+                                <li class="p-0 m-0">{{topping.name}}</li>
+                                {% endfor %}
 
-    </div>
+                                {% endif %}
+
+                                {% if item.addons.all %}
+                                <p class="p-0 m-0"><b>Addons</b></p>
+                                {% for addon in item.addons.all %}
+                                <li class="p-0 m-0">{{addon.name}} | + {{addon.price}}</li>
+                                {% endfor %}
+                                {% endif %}
+
+                        </div>
+                        <div class="col align-self-center">
+                                <h4 class="text-right my-auto text-warning"><b>${{item.itemPrice}}</b></h4>
+                        </div>
+                </div>
+        </div>
+
+
+
+        {% endfor %}
+
+</div>
+
+{% endif %}
 
 {% endfor %}
+
 
 {% endblock %}
